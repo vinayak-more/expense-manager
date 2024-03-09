@@ -1,19 +1,28 @@
 <mat-card>
+    <mat-card-subtitle>
+        <app-transaction-item-summary [date]="transactionDate"
+            [transactions]="transactions"></app-transaction-item-summary>
+    </mat-card-subtitle>
     <mat-card-content>
-        <app-transaction-item-summary 
-        [date]="transactionDate"
-        [transactions]="transactions"
-        ></app-transaction-item-summary>
         <mat-divider></mat-divider>
         <div *ngFor="let transaction of transactions">
-            <div class="d-flex flex-row justify-content-between mt-1">
-                <div class="mt-auto">{{ transaction.category}}</div>
-                <div class="mt-auto">
-                    <div>{{transaction.note}}</div>
-                    <div>{{transaction.account}}</div>
-                </div>
-                <div class="mt-auto" [ngClass]="{'text-danger': transaction.transactionType === 1, 'text-primary': transaction.transactionType === 2}">{{transaction.amount}}</div>
-            </div>
+            <mat-grid-list cols="3" rowHeight="3rem">
+                <mat-grid-tile>
+                    {{ transaction.category}}
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="d-flex flex-column align-items-center">
+                        <div>{{transaction.note}}</div>
+                        <div>{{transaction.account}}</div>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div
+                        [ngClass]="{'text-danger': transaction.transactionType === 1, 'text-primary': transaction.transactionType === 2}">
+                        {{transaction.amount}}</div>
+                </mat-grid-tile>
+                <mat-divider></mat-divider>
+            </mat-grid-list>
         </div>
     </mat-card-content>
     <!-- <mat-card-actions>

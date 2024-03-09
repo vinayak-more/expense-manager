@@ -1,5 +1,11 @@
-<div class="d-flex flex-row justify-content-between">
-    <div>{{ date }}</div>
-    <div class="text-primary">{{ credits }}</div>
-    <div class="text-danger">{{ debits }}</div>
-</div>
+<mat-grid-list cols="3" rowHeight="3rem">
+    <mat-grid-tile>
+        {{ date }}
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div class="text-primary">{{ credits }}</div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div class="text-danger">{{ debits }}</div>
+    </mat-grid-tile>
+</mat-grid-list>

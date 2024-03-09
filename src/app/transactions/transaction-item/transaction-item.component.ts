@@ -4,6 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemSummaryComponent } from '../transaction-item-summary/transaction-item-summary.component';
 import { NgClass, NgFor } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-transaction-item',
@@ -14,6 +15,7 @@ import { NgClass, NgFor } from '@angular/common';
     TransactionItemSummaryComponent,
     MatCardModule, 
     MatDividerModule,
+    MatGridListModule,
   ],
   templateUrl: './transaction-item.component.html',
   styleUrl: './transaction-item.component.scss'

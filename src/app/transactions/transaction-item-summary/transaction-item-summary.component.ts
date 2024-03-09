@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Transaction, TransactionType } from '../../model/transaction.model';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-transaction-item-summary',
   standalone: true,
-  imports: [],
+  imports: [ MatGridListModule],
   templateUrl: './transaction-item-summary.component.html',
   styleUrl: './transaction-item-summary.component.scss'
 })
