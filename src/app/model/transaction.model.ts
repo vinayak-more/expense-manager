@@ -1,5 +1,5 @@
 export interface Transaction{
-    date:Date,
+    date:string,
     account:string,
     category:string,
     amount:number,

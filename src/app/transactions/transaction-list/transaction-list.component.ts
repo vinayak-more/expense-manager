@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
 import { CommonModule } from '@angular/common';
+import { TransactionService } from '../transaction.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -10,22 +11,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.scss'
 })
-export class TransactionListComponent {
-  transactionList: Transaction[] = [
-    {
-      date: new Date(),
-      account: 'Cash',
-      category: 'Transpotation',
-      amount: 20,
-      note: 'Bus'
+export class TransactionListComponent implements OnInit{
+  transactionMap:Map<string, Transaction[]> | null = null;
 
-    },
-    {
-      date: new Date(),
-      account: 'Cash',
-      category: 'Grocary',
-      amount: 20,
-      note: 'Milk'
-    }
-  ]
+  constructor(private transactionService: TransactionService){}
+
+  ngOnInit(): void {
+    this.transactionMap = this.transactionService.getTransactionsGroupByDate();
+    console.log(this.transactionMap);
+  }
 }

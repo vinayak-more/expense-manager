@@ -1,18 +1,18 @@
 <mat-card>
     <mat-card-content>
-        <div class="d-flex flex-row justify-content-between">
-            <div>24-01-2024</div>
-            <div>0.00</div>
-            <div>138</div>
-        </div>
+        <app-transaction-item-summary 
+        [date]="transactionDate"
+        ></app-transaction-item-summary>
         <mat-divider></mat-divider>
-        <div class="d-flex flex-row justify-content-between mt-1">
-            <div class="mt-auto">{{ transaction.category}}</div>
-            <div class="mt-auto">
-                <div>{{transaction.note}}</div>
-                <div>{{transaction.account}}</div>
+        <div *ngFor="let transaction of transactions">
+            <div class="d-flex flex-row justify-content-between mt-1">
+                <div class="mt-auto">{{ transaction.category}}</div>
+                <div class="mt-auto">
+                    <div>{{transaction.note}}</div>
+                    <div>{{transaction.account}}</div>
+                </div>
+                <div class="mt-auto">{{transaction.amount}}</div>
             </div>
-            <div class="mt-auto">{{transaction.amount}}</div>
         </div>
     </mat-card-content>
     <!-- <mat-card-actions>
