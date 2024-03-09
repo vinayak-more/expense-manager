@@ -6,7 +6,9 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-transaction-summary',
   standalone: true,
-  imports: [MatGridListModule, MatDividerModule],
+  imports: [
+    MatGridListModule, 
+    MatDividerModule],
   templateUrl: './transaction-summary.component.html',
   styleUrl: './transaction-summary.component.scss'
 })
