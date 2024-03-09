@@ -3,13 +3,14 @@ import {MatCardModule} from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemSummaryComponent } from '../transaction-item-summary/transaction-item-summary.component';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-item',
   standalone: true,
   imports: [ 
     NgFor,
+    NgClass,
     TransactionItemSummaryComponent,
     MatCardModule, 
     MatDividerModule,

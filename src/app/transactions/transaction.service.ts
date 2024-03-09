@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Transaction } from '../model/transaction.model';
+import { Transaction, TransactionType } from '../model/transaction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ export class TransactionService {
   transactionList: Transaction[] = [
     {
       date: "01-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Transpotation',
       amount: 20,
@@ -16,6 +17,7 @@ export class TransactionService {
     },
     {
       date: "01-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Transpotation',
       amount: 20,
@@ -24,14 +26,16 @@ export class TransactionService {
     },
     {
       date: "01-01-2023",
+      transactionType: TransactionType.CREDIT,
       account: 'Cash',
-      category: 'Transpotation',
+      category: 'Cashback',
       amount: 20,
-      note: 'Train'
+      note: 'GPay'
 
     },
     {
       date: "02-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Grocary',
       amount: 20,
@@ -39,20 +43,15 @@ export class TransactionService {
     },
     {
       date: "02-01-2023",
+      transactionType: TransactionType.CREDIT,
       account: 'Cash',
-      category: 'Food',
+      category: 'Refund',
       amount: 20,
-      note: 'Snacks'
+      note: 'Flipkart'
     },
     {
       date: "02-01-2023",
-      account: 'Cash',
-      category: 'Food',
-      amount: 20,
-      note: 'Tea'
-    },
-    {
-      date: "02-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Food',
       amount: 20,
@@ -60,6 +59,7 @@ export class TransactionService {
     },
     {
       date: "02-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Food',
       amount: 20,
@@ -67,6 +67,15 @@ export class TransactionService {
     },
     {
       date: "02-01-2023",
+      transactionType: TransactionType.DEBIT,
+      account: 'Cash',
+      category: 'Food',
+      amount: 20,
+      note: 'Tea'
+    },
+    {
+      date: "02-01-2023",
+      transactionType: TransactionType.DEBIT,
       account: 'Cash',
       category: 'Food',
       amount: 20,

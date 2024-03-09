@@ -2,6 +2,7 @@
     <mat-card-content>
         <app-transaction-item-summary 
         [date]="transactionDate"
+        [transactions]="transactions"
         ></app-transaction-item-summary>
         <mat-divider></mat-divider>
         <div *ngFor="let transaction of transactions">
@@ -11,7 +12,7 @@
                     <div>{{transaction.note}}</div>
                     <div>{{transaction.account}}</div>
                 </div>
-                <div class="mt-auto">{{transaction.amount}}</div>
+                <div class="mt-auto" [ngClass]="{'text-danger': transaction.transactionType === 1, 'text-primary': transaction.transactionType === 2}">{{transaction.amount}}</div>
             </div>
         </div>
     </mat-card-content>
