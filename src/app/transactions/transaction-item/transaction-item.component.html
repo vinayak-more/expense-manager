@@ -16,7 +16,7 @@
                         <div>{{transaction.account}}</div>
                     </div>
                 </mat-grid-tile>
-                <mat-grid-tile>
+                <mat-grid-tile >
                     <div
                         [ngClass]="{'text-danger': transaction.transactionType === 1, 'text-primary': transaction.transactionType === 2}">
                         {{transaction.amount}}</div>

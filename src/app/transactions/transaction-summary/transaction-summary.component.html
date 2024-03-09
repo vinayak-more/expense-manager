@@ -2,19 +2,19 @@
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div>Income</div>
-            <div class="text-primary">0.00</div>
+            <div class="text-primary">{{ credits }}</div>
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div>Expenses</div>
-            <div class="text-danger">0.00</div>
+            <div class="text-danger">{{ debits }}</div>
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div class="d-block">Total</div>
-            <div class="d-block">0.00</div>
+            <div class="d-block">{{ total }}</div>
         </div>
     </mat-grid-tile>
 </mat-grid-list>
