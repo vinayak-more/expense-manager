@@ -3,12 +3,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../../model/transaction.model';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-transaction-summary',
   standalone: true,
   imports: [
+    NgClass,
     MatGridListModule, 
     MatDividerModule],
   templateUrl: './transaction-summary.component.html',
@@ -32,7 +34,7 @@ export class TransactionSummaryComponent implements OnInit{
       } else if(transaction.transactionType === TransactionType.DEBIT){
         this.debits += transaction.amount;
       }
-      this.total += transaction.amount;
     }
+    this.total = this.credits - this.debits;
   }
 }

@@ -13,8 +13,8 @@
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
-            <div class="d-block">Total</div>
-            <div class="d-block">{{ total }}</div>
+            <div>Total</div>
+            <div [ngClass]="{'text-primary': total >= 0, 'text-danger': total < 0}">{{ total }}</div>
         </div>
     </mat-grid-tile>
 </mat-grid-list>
