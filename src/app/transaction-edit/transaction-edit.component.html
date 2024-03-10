@@ -3,9 +3,8 @@
         <button mat-icon-button (click)="onBack()">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <span style="vertical-align: super;">Expenses</span>
+        <span style="vertical-align: super;">Expense</span>
     </div>
-    <mat-divider></mat-divider>
     <form>
         <div class="row">
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
@@ -14,7 +13,7 @@
                 <mat-button-toggle class="col-4" value="transfer">Transfer</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-        <div class="row">
+        <div class="row mt-3 align-items-center">
             <div class="col-3">Date</div>
             <mat-form-field class="col-9">
                 <mat-label>Choose a date</mat-label>
@@ -40,7 +39,7 @@
             <mat-form-field class="col-9">
                 <input matInput>
             </mat-form-field>
-            <button class="col-6" mat-raised-button color="primary" type="submit"> Save</button>
+            <button class="col-6" mat-raised-button color="primary" type="button"> Save</button>
             <button class="col-6" mat-raised-button color="accent" type="button" (click)="onBack()">Cancel</button>
         </div>
     </form>
