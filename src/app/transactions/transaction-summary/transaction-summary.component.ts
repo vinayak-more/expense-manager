@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../../service/transaction.service';
 import { TransactionType } from '../../model/transaction.model';
 import { NgClass } from '@angular/common';
 

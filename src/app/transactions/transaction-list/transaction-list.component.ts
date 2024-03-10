@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
 import { CommonModule } from '@angular/common';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'app-transaction-list',
