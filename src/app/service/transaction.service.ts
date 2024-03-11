@@ -100,4 +100,8 @@ export class TransactionService {
   public getTransactions(){
     return [...this.transactionList];
   }
+
+  public saveTransaction(transaction: Transaction){
+    this.transactionList.push(transaction);
+  }
 }

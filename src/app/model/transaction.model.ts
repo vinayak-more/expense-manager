@@ -1,12 +1,14 @@
 export interface Transaction{
-    date:string,
-    transactionType: number,
-    account:string,
-    category:string,
-    amount:number,
+    date?:string,
+    transactionType?: string,
+    account?:string,
+    category?:string,
+    amount?:number,
     note?:string
 }
 export const TransactionType = Object.freeze({
-    DEBIT: 1,
-    CREDIT: 2
+    CREDIT: 'CREDIT',
+    DEBIT: 'DEBIT',
+    TRANSFER: 'TRANSFER'
+    
 })

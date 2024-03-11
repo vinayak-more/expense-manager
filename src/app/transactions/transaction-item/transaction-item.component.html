@@ -18,7 +18,7 @@
                 </mat-grid-tile>
                 <mat-grid-tile >
                     <div
-                        [ngClass]="{'text-danger': transaction.transactionType === 1, 'text-primary': transaction.transactionType === 2}">
+                        [ngClass]="{'text-danger': transaction.transactionType === 'DEBIT', 'text-primary': transaction.transactionType === 'CREDIT'}">
                         {{transaction.amount}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
