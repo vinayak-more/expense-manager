@@ -110,21 +110,25 @@ export class TransactionService {
   ) { }
 
   public getTransactionsGroupByDate() {
-    const map = new Map<Date, Transaction[]>();
+    const map = new Map<string, Transaction[]>();
     for (let transaction of this.getTransactions()) {
-      if (map.has(transaction.date)) {
-        map.get(transaction.date)?.push(transaction);
+      if (map.has(this.getDateAsString(transaction.date))) {
+        map.get(this.getDateAsString(transaction.date))?.push(transaction);
       } else {
-        map.set(transaction.date, [transaction]);
+        map.set(this.getDateAsString(transaction.date), [transaction]);
       }
     }
     return map;
   }
 
+  public getDateAsString(date: Date){
+    return date.toLocaleDateString('es-CL');
+  }
+
   public getTransactions() {
     const accountMap = this.getAccountMap();
     const categoryMap = this.getCategoryMap();
-    const transactions = [];
+    const transactions: Transaction[] = [];
     this.transactionList.forEach(transaction => {
       const newTransaciton = { ...transaction };
       newTransaciton.accountName = accountMap.get(transaction.account);

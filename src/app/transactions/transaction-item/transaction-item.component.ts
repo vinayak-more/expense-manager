@@ -7,6 +7,7 @@ import { NgClass, NgFor } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TransactionType } from '../../model/transaction-type.enum';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-transaction-item',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
     NgFor,
     NgClass,
     TransactionItemSummaryComponent,
+    MatIconModule,
     MatCardModule, 
     MatDividerModule,
     MatGridListModule,
@@ -24,7 +26,7 @@ import { Router } from '@angular/router';
 })
 export class TransactionItemComponent {
   @Input() transactions!: Transaction[];
-  @Input() transactionDate!: Date;
+  @Input() transactionDate!: string;
   transactionType = TransactionType;
 
   constructor(private router:Router){}
