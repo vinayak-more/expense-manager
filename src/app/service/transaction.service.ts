@@ -10,7 +10,8 @@ import { CategoryService } from './category.service';
 export class TransactionService {
   transactionList: Transaction[] = [
     {
-      date: "01-01-2023",
+      id: 1,
+      date: new Date(new Date("01-01-2023")),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 1,
@@ -19,7 +20,8 @@ export class TransactionService {
 
     },
     {
-      date: "01-01-2023",
+      id: 2,
+      date: new Date("01-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 2,
       category: 2,
@@ -28,7 +30,8 @@ export class TransactionService {
 
     },
     {
-      date: "01-01-2023",
+      id: 3,
+      date: new Date("01-01-2023"),
       transactionType: TransactionType.CREDIT,
       account: 3,
       category: 5,
@@ -37,7 +40,8 @@ export class TransactionService {
 
     },
     {
-      date: "02-01-2023",
+      id: 4,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -45,7 +49,8 @@ export class TransactionService {
       note: 'Milk'
     },
     {
-      date: "02-01-2023",
+      id: 5,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.CREDIT,
       account: 1,
       category: 5,
@@ -53,7 +58,8 @@ export class TransactionService {
       note: 'Flipkart'
     },
     {
-      date: "02-01-2023",
+      id: 6,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -61,7 +67,8 @@ export class TransactionService {
       note: 'Tea'
     },
     {
-      date: "02-01-2023",
+      id: 7,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -69,7 +76,8 @@ export class TransactionService {
       note: 'Tea'
     },
     {
-      date: "02-01-2023",
+      id: 8,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -77,7 +85,8 @@ export class TransactionService {
       note: 'Tea'
     },
     {
-      date: "02-01-2023",
+      id: 9,
+      date: new Date("02-01-2023"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -85,38 +94,39 @@ export class TransactionService {
       note: 'Tea'
     },
     {
-      date: "03-01-2023",
+      id: 10,
+      date: new Date("03-01-2023"),
       transactionType: TransactionType.TRANSFER,
       account: 1,
       to: 3,
       amount: 20,
       note: 'Cash withdraw'
     }
-    
+
   ]
   constructor(
     private accountService: AccountService,
     private categoryService: CategoryService,
-    ) { }
+  ) { }
 
-  public getTransactionsGroupByDate(){
-    const map = new Map<string, Transaction[]>();
-    for(let transaction of this.getTransactions()){
-      if(map.has(transaction.date)){
+  public getTransactionsGroupByDate() {
+    const map = new Map<Date, Transaction[]>();
+    for (let transaction of this.getTransactions()) {
+      if (map.has(transaction.date)) {
         map.get(transaction.date)?.push(transaction);
-      }else {
+      } else {
         map.set(transaction.date, [transaction]);
       }
     }
     return map;
   }
 
-  public getTransactions(){
+  public getTransactions() {
     const accountMap = this.getAccountMap();
     const categoryMap = this.getCategoryMap();
     const transactions = [];
-    this.transactionList.forEach( transaction => {
-      const newTransaciton = { ...transaction};
+    this.transactionList.forEach(transaction => {
+      const newTransaciton = { ...transaction };
       newTransaciton.accountName = accountMap.get(transaction.account);
       newTransaciton.categoryName = categoryMap.get(transaction.category);
       newTransaciton.toName = accountMap.get(transaction.to);
@@ -125,19 +135,29 @@ export class TransactionService {
     return transactions;
   }
 
-  public saveTransaction(transaction: Transaction){
+  public getTransaction(id: number) {
+    return this.transactionList.find(transaction => transaction.id === id);
+  }
+
+  public saveTransaction(transaction: Transaction) {
+    transaction.id = this.transactionList.length,
     this.transactionList.push(transaction);
   }
 
-  private getAccountMap(){
+  private getAccountMap() {
     const accountMap = new Map<number, string>();
-    this.accountService.getAccounts().forEach(account=> accountMap.set(account.id, account.name));
+    this.accountService.getAccounts().forEach(account => accountMap.set(account.id, account.name));
     return accountMap;
   }
 
-  private getCategoryMap(){
+  private getCategoryMap() {
     const categoryMap = new Map<number, string>();
     this.categoryService.getCategories().forEach(category => categoryMap.set(category.id, category.name));
     return categoryMap;
+  }
+
+  public updateTransaction(transaction: Transaction){
+    const index = this.transactionList.findIndex(ele=> ele.id == transaction.id);
+    this.transactionList[index] = transaction;
   }
 }

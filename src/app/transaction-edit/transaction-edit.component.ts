@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,11 +17,13 @@ import { Account } from '../model/account.model';
 import { AccountService } from '../service/account.service';
 import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category.model';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-edit',
   standalone: true,
   imports: [
+    NgIf,
     ReactiveFormsModule,
 
     MatIconModule,
@@ -40,9 +42,11 @@ import { Category } from '../model/category.model';
 export class TransactionEditComponent implements OnInit {
   accounts: Account[];
   categories: Category[];
+  editMode: boolean = false;
 
   formGroup = new FormGroup<TransactionForm>({
-    transactionType: new FormControl(TransactionType.DEBIT, Validators.required),
+    id: new FormControl(null),
+    transactionType: new FormControl(TransactionType.DEBIT, {nonNullable: true}),
     date: new FormControl(new Date(), Validators.required),
     account: new FormControl(null, Validators.required),
     category: new FormControl(null, Validators.required),
@@ -51,6 +55,7 @@ export class TransactionEditComponent implements OnInit {
   });
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private transactionService: TransactionService,
     private accountService: AccountService,
@@ -61,27 +66,41 @@ export class TransactionEditComponent implements OnInit {
     this.accounts = this.accountService.getAccounts();
     this.categories = this.categoryService.getCategories().filter(category => category.transactionType === this.formGroup.value.transactionType);
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
-
+    this.route.params.subscribe((params: Params) => {
+      if (params['id']) {
+        this.editMode = true;
+        const transaction = this.transactionService.getTransaction(+params['id']);
+        this.onTransactionTypeChange(transaction.transactionType);
+        this.formGroup.setValue({
+          ...transaction,
+        });
+      } else {
+        this.editMode = false;
+      }
+    })
   }
 
   onTransactionTypeChange(type: TransactionType) {
-    if(type === TransactionType.TRANSFER){
+    if (type === TransactionType.TRANSFER) {
       this.formGroup.removeControl('category');
       this.formGroup.addControl('to', new FormControl(null, Validators.required));
     } else {
       this.formGroup.removeControl('to');
       this.categories = this.categoryService.getCategories().filter(category => category.transactionType === type);
-      if(this.formGroup.contains('category'))
+      if (this.formGroup.contains('category'))
         this.formGroup.controls.category.reset();
       else this.formGroup.addControl('category', new FormControl(null, Validators.required));
     }
   }
 
   onSubmit() {
-    this.transactionService.saveTransaction({
-      ...this.formGroup.value,
-      date: this.formGroup.value.date ? this.formGroup.value.date.toLocaleDateString('en-in') : '',
-    });
+    const transaction = {...this.formGroup.getRawValue()};
+    if(this.editMode){
+      this.transactionService.updateTransaction(transaction);
+    } else {
+      this.transactionService.saveTransaction(transaction);
+    }
+
     this.onBack();
   }
 
@@ -91,12 +110,13 @@ export class TransactionEditComponent implements OnInit {
 
 }
 
-interface TransactionForm{
-  transactionType: FormControl<TransactionType | null>,
-    date: FormControl<Date>,
-    account: FormControl<number | null>,
-    amount: FormControl<number | null>,
-    note: FormControl<string | null>,
-    category?: FormControl<number | null>,
-    to?:FormControl<number | null>,
+interface TransactionForm {
+  id?:FormControl<number|null>,
+  transactionType: FormControl<TransactionType>,
+  date: FormControl<Date>,
+  account: FormControl<number | null>,
+  amount: FormControl<number | null>,
+  note?: FormControl<string | null>,
+  category?: FormControl<number | null>,
+  to?: FormControl<number | null>,
 }

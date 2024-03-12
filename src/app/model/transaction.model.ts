@@ -1,13 +1,14 @@
 import { TransactionType } from "./transaction-type.enum";
 
 export interface Transaction{
-    date?:string,
-    transactionType?: TransactionType,
-    account?:number,
-    category?:number,
-    amount?:number,
-    to?:number,
+    transactionType: TransactionType,
+    date:Date,
+    account:number,
+    amount:number,
     note?:string
+    category?:number,
+    to?:number,
+    id?:number,
     accountName?:string,
     categoryName?:string,
     toName?:string,

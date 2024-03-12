@@ -12,7 +12,7 @@ import { TransactionService } from '../../service/transaction.service';
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent implements OnInit{
-  transactionMap:Map<string, Transaction[]> | null = null;
+  transactionMap:Map<Date, Transaction[]> | null = null;
 
   constructor(private transactionService: TransactionService){}
 

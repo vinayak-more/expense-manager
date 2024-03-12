@@ -1,12 +1,12 @@
 <mat-card class="m-1">
     <mat-card-subtitle>
-        <app-transaction-item-summary [date]="transactionDate"
+        <app-transaction-item-summary [date]="transactionDate.toLocaleDateString('en-IN')"
             [transactions]="transactions"></app-transaction-item-summary>
     </mat-card-subtitle>
     <mat-card-content>
         <mat-divider></mat-divider>
         <div *ngFor="let transaction of transactions">
-            <mat-grid-list cols="3" rowHeight="3rem">
+            <mat-grid-list cols="3" rowHeight="3rem" (click)="onClick(transaction)">
                 @if(transaction.transactionType === transactionType.TRANSFER){
                     <mat-grid-tile> {{ transaction.accountName }} -> {{ transaction.toName}}</mat-grid-tile>
                     <mat-grid-tile>{{ transaction.note }}</mat-grid-tile>

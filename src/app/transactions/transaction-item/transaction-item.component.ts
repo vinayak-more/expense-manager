@@ -6,6 +6,7 @@ import { TransactionItemSummaryComponent } from '../transaction-item-summary/tra
 import { NgClass, NgFor } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TransactionType } from '../../model/transaction-type.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-item',
@@ -23,6 +24,12 @@ import { TransactionType } from '../../model/transaction-type.enum';
 })
 export class TransactionItemComponent {
   @Input() transactions!: Transaction[];
-  @Input() transactionDate!: string;
+  @Input() transactionDate!: Date;
   transactionType = TransactionType;
+
+  constructor(private router:Router){}
+
+  onClick(transaction: Transaction){
+    this.router.navigate(['transactions', 'edit', transaction.id]); 
+  }
 }

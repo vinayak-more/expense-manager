@@ -6,4 +6,5 @@ export const routes: Routes = [
     { path: '', component: TransactionsComponent},
     { path: 'transactions', component: TransactionsComponent},
     { path: 'transactions/new', component: TransactionEditComponent},
+    { path: 'transactions/edit/:id', component: TransactionEditComponent}
 ];
