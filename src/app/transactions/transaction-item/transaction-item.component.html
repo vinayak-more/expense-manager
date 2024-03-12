@@ -7,18 +7,24 @@
         <mat-divider></mat-divider>
         <div *ngFor="let transaction of transactions">
             <mat-grid-list cols="3" rowHeight="3rem">
-                <mat-grid-tile>
-                    {{ transaction.category}}
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <div class="d-flex flex-column align-items-center">
-                        <div>{{transaction.note}}</div>
-                        <div>{{transaction.account}}</div>
-                    </div>
-                </mat-grid-tile>
+                @if(transaction.transactionType === transactionType.TRANSFER){
+                    <mat-grid-tile> {{ transaction.accountName }} -> {{ transaction.toName}}</mat-grid-tile>
+                    <mat-grid-tile>{{ transaction.note }}</mat-grid-tile>
+                }
+                @else{
+                    <mat-grid-tile>
+                        {{ transaction.categoryName }}
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="d-flex flex-column align-items-center">
+                            <div>{{transaction.note}}</div>
+                            <div>{{transaction.accountName}}</div>
+                        </div>
+                    </mat-grid-tile>
+                }
                 <mat-grid-tile >
                     <div
-                        [ngClass]="{'text-danger': transaction.transactionType === 'DEBIT', 'text-primary': transaction.transactionType === 'CREDIT'}">
+                        [ngClass]="{'text-danger': transaction.transactionType === transactionType.DEBIT , 'text-primary': transaction.transactionType === transactionType.CREDIT}">
                         {{transaction.amount}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>

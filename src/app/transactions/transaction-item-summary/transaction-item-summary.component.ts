@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Transaction, TransactionType } from '../../model/transaction.model';
+import { Transaction } from '../../model/transaction.model';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { TransactionType } from '../../model/transaction-type.enum';
 
 @Component({
   selector: 'app-transaction-item-summary',
@@ -21,7 +22,7 @@ export class TransactionItemSummaryComponent implements OnInit {
     for(let transaction of this.transactions){
       if(transaction.transactionType === TransactionType.CREDIT){
         this.credits+=transaction.amount;
-      } else {
+      } else if(transaction.transactionType === TransactionType.DEBIT){
         this.debits += transaction.amount;
       }
     }

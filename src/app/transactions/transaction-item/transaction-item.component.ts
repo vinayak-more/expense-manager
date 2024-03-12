@@ -5,6 +5,7 @@ import { Transaction } from '../../model/transaction.model';
 import { TransactionItemSummaryComponent } from '../transaction-item-summary/transaction-item-summary.component';
 import { NgClass, NgFor } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { TransactionType } from '../../model/transaction-type.enum';
 
 @Component({
   selector: 'app-transaction-item',
@@ -23,4 +24,5 @@ import { MatGridListModule } from '@angular/material/grid-list';
 export class TransactionItemComponent {
   @Input() transactions!: Transaction[];
   @Input() transactionDate!: string;
+  transactionType = TransactionType;
 }
