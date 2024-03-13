@@ -3,11 +3,15 @@ import { Transaction } from '../model/transaction.model';
 import { TransactionType } from '../model/transaction-type.enum';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
+  selectedMonth = new Date();
+  selectedMonth$ = new Subject<Date>();
+
   transactionList: Transaction[] = [
     {
       id: 1,
@@ -163,5 +167,23 @@ export class TransactionService {
   public updateTransaction(transaction: Transaction){
     const index = this.transactionList.findIndex(ele=> ele.id == transaction.id);
     this.transactionList[index] = transaction;
+  }
+
+  public getSelectedMonth(){
+    return this.selectedMonth;
+  }
+
+  public getSelectedMonth$(){
+    return this.selectedMonth$;
+  }
+
+  public onNextMonth(){
+    this.selectedMonth.setMonth(this.selectedMonth.getMonth() + 1);
+    this.selectedMonth$.next(this.selectedMonth);
+  }
+
+  public onPrevMonth(){
+    this.selectedMonth.setMonth(this.selectedMonth.getMonth() - 1);
+    this.selectedMonth$.next(this.selectedMonth);
   }
 }
