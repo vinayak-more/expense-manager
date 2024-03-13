@@ -15,7 +15,7 @@ export class TransactionService {
   transactionList: Transaction[] = [
     {
       id: 1,
-      date: new Date(new Date("01-01-2023")),
+      date: new Date(new Date("01-01-2024")),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 1,
@@ -25,7 +25,7 @@ export class TransactionService {
     },
     {
       id: 2,
-      date: new Date("01-01-2023"),
+      date: new Date("01-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 2,
       category: 2,
@@ -35,7 +35,7 @@ export class TransactionService {
     },
     {
       id: 3,
-      date: new Date("01-01-2023"),
+      date: new Date("01-01-2024"),
       transactionType: TransactionType.CREDIT,
       account: 3,
       category: 5,
@@ -45,7 +45,7 @@ export class TransactionService {
     },
     {
       id: 4,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -54,7 +54,7 @@ export class TransactionService {
     },
     {
       id: 5,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.CREDIT,
       account: 1,
       category: 5,
@@ -63,7 +63,7 @@ export class TransactionService {
     },
     {
       id: 6,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -72,7 +72,7 @@ export class TransactionService {
     },
     {
       id: 7,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -81,7 +81,7 @@ export class TransactionService {
     },
     {
       id: 8,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -90,7 +90,7 @@ export class TransactionService {
     },
     {
       id: 9,
-      date: new Date("02-01-2023"),
+      date: new Date("02-01-2024"),
       transactionType: TransactionType.DEBIT,
       account: 1,
       category: 3,
@@ -99,7 +99,7 @@ export class TransactionService {
     },
     {
       id: 10,
-      date: new Date("03-01-2023"),
+      date: new Date("03-01-2024"),
       transactionType: TransactionType.TRANSFER,
       account: 1,
       to: 3,
@@ -134,6 +134,9 @@ export class TransactionService {
     const categoryMap = this.getCategoryMap();
     const transactions: Transaction[] = [];
     this.transactionList.forEach(transaction => {
+      if(transaction.date.getMonth() != this.selectedMonth.getMonth()) return;
+      if(transaction.date.getFullYear() != this.selectedMonth.getFullYear()) return;
+
       const newTransaciton = { ...transaction };
       newTransaciton.accountName = accountMap.get(transaction.account);
       newTransaciton.categoryName = categoryMap.get(transaction.category);

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TransactionService } from '../../service/transaction.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-header',
@@ -11,8 +12,9 @@ import { TransactionService } from '../../service/transaction.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   selectedMonth: string;
+  selectedMonthSub:Subscription;
 
   constructor(
     private transactionService: TransactionService
@@ -20,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.setSelectedMonth(this.transactionService.getSelectedMonth());
-    this.transactionService.getSelectedMonth$().subscribe(date => this.setSelectedMonth(date));
+    this.selectedMonthSub = this.transactionService.getSelectedMonth$().subscribe(date => this.setSelectedMonth(date));
   }
 
   setSelectedMonth(date: Date) {
@@ -33,5 +35,8 @@ export class HeaderComponent implements OnInit {
 
   onPrevMonth() {
     this.transactionService.onPrevMonth();
+  }
+  ngOnDestroy(): void {
+    this.selectedMonthSub.unsubscribe();
   }
 }
