@@ -15,17 +15,19 @@ import { Subscription } from 'rxjs';
 export class TransactionListComponent implements OnInit, OnDestroy{
   transactionMap:Map<string, Transaction[]> | null = null;
   selectedMonthSub: Subscription;
+  transactionsSub: Subscription;
 
   constructor(private transactionService: TransactionService){}
 
   ngOnInit(): void {
-    this.transactionMap = this.transactionService.getTransactionsGroupByDate();
+    this.transactionsSub = this.transactionService.getTransactions$().subscribe( transactionMap => this.transactionMap = transactionMap);
     this.selectedMonthSub = this.transactionService.getSelectedMonth$().subscribe(month=>{
-      this.transactionMap = this.transactionService.getTransactionsGroupByDate();
+      // this.transactionMap = this.transactionService.getTransactions();
     });
   }
 
   ngOnDestroy(): void {
     this.selectedMonthSub.unsubscribe();
+    this.transactionsSub.unsubscribe();
   }
 }

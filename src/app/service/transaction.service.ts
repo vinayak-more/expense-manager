@@ -3,7 +3,8 @@ import { Transaction } from '../model/transaction.model';
 import { TransactionType } from '../model/transaction-type.enum';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
-import { Subject } from 'rxjs';
+import { Subject, map } from 'rxjs';
+import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query, where } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -12,110 +13,49 @@ export class TransactionService {
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
 
-  transactionList: Transaction[] = [
-    {
-      id: 1,
-      date: new Date(new Date("01-01-2024")),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 1,
-      amount: 20,
-      note: 'Bus'
-
-    },
-    {
-      id: 2,
-      date: new Date("01-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 2,
-      category: 2,
-      amount: 20,
-      note: 'Riksha'
-
-    },
-    {
-      id: 3,
-      date: new Date("01-01-2024"),
-      transactionType: TransactionType.CREDIT,
-      account: 3,
-      category: 5,
-      amount: 20,
-      note: 'GPay'
-
-    },
-    {
-      id: 4,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 3,
-      amount: 20,
-      note: 'Milk'
-    },
-    {
-      id: 5,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.CREDIT,
-      account: 1,
-      category: 5,
-      amount: 20,
-      note: 'Flipkart'
-    },
-    {
-      id: 6,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 3,
-      amount: 20,
-      note: 'Tea'
-    },
-    {
-      id: 7,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 3,
-      amount: 20,
-      note: 'Tea'
-    },
-    {
-      id: 8,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 3,
-      amount: 20,
-      note: 'Tea'
-    },
-    {
-      id: 9,
-      date: new Date("02-01-2024"),
-      transactionType: TransactionType.DEBIT,
-      account: 1,
-      category: 3,
-      amount: 20,
-      note: 'Tea'
-    },
-    {
-      id: 10,
-      date: new Date("03-01-2024"),
-      transactionType: TransactionType.TRANSFER,
-      account: 1,
-      to: 3,
-      amount: 20,
-      note: 'Cash withdraw'
-    }
-
-  ]
+  transactionList: Transaction[] = [];
   constructor(
     private accountService: AccountService,
     private categoryService: CategoryService,
+    private store: Firestore,
   ) { }
 
-  public getTransactionsGroupByDate() {
+  
+
+  public getDateAsString(date: Date | Timestamp){
+    if(date instanceof Timestamp){
+      date = date.toDate();
+    }
+    return date.toLocaleDateString('es-CL');
+  }
+
+  public getTransactions$(){
+    return collectionData(query(
+      collection(this.store, 'txn'), 
+      where('monthYear', '==', this.getMonthYear(this.selectedMonth))))
+      .pipe(
+        map((transactions: Transaction[])=>{
+        return this.initTransactions(transactions);
+      }),
+      map((transactions: Transaction[])=>{
+        return this.getTransactionsGroupByDate(transactions);
+      }));
+  }
+
+  private initTransactions(transactions: Transaction[]){
+    const accountMap = this.getAccountMap();
+    const categoryMap = this.getCategoryMap();
+    transactions.forEach( transaction =>{
+      transaction.accountName = accountMap.get(transaction.account);
+      transaction.categoryName = categoryMap.get(transaction.category);
+      transaction.toName = accountMap.get(transaction.to);
+    })
+    return transactions;
+  }
+
+  public getTransactionsGroupByDate(transactions: Transaction[]) {
     const map = new Map<string, Transaction[]>();
-    for (let transaction of this.getTransactions()) {
+    for (let transaction of transactions) {
       if (map.has(this.getDateAsString(transaction.date))) {
         map.get(this.getDateAsString(transaction.date))?.push(transaction);
       } else {
@@ -124,9 +64,8 @@ export class TransactionService {
     }
     return map;
   }
-
-  public getDateAsString(date: Date){
-    return date.toLocaleDateString('es-CL');
+  private getMonthYear(date:Date){
+    return date.getMonth() + '-' + date.getFullYear();
   }
 
   public getTransactions() {
@@ -150,9 +89,10 @@ export class TransactionService {
     return this.transactionList.find(transaction => transaction.id === id);
   }
 
-  public saveTransaction(transaction: Transaction) {
+  public async saveTransaction(transaction: Transaction) {
     transaction.id = this.transactionList.length,
     this.transactionList.push(transaction);
+    await addDoc(collection(this.store, 'txn'), transaction);
   }
 
   private getAccountMap() {

@@ -3,6 +3,7 @@ import { TransactionType } from "./transaction-type.enum";
 export interface Transaction{
     transactionType: TransactionType,
     date:Date,
+    monthYear?:string,
     account:number,
     amount:number,
     note?:string

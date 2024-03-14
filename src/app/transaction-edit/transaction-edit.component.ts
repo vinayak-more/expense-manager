@@ -46,7 +46,7 @@ export class TransactionEditComponent implements OnInit {
 
   formGroup = new FormGroup<TransactionForm>({
     id: new FormControl(null),
-    transactionType: new FormControl(TransactionType.DEBIT, {nonNullable: true}),
+    transactionType: new FormControl(TransactionType.DEBIT, { nonNullable: true }),
     date: new FormControl(new Date(), Validators.required),
     account: new FormControl(null, Validators.required),
     category: new FormControl(null, Validators.required),
@@ -94,14 +94,21 @@ export class TransactionEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const transaction = {...this.formGroup.getRawValue()};
-    if(this.editMode){
+    const transaction = {
+      ...this.formGroup.getRawValue(),
+      'monthYear': this.getMonthYear(this.formGroup.value.date),
+    };
+    if (this.editMode) {
       this.transactionService.updateTransaction(transaction);
     } else {
       this.transactionService.saveTransaction(transaction);
     }
 
     this.onBack();
+  }
+
+  private getMonthYear(date:Date){
+    return date.getMonth() + '-' + date.getFullYear();
   }
 
   onBack() {
@@ -111,7 +118,7 @@ export class TransactionEditComponent implements OnInit {
 }
 
 interface TransactionForm {
-  id?:FormControl<number|null>,
+  id?: FormControl<number | null>,
   transactionType: FormControl<TransactionType>,
   date: FormControl<Date>,
   account: FormControl<number | null>,
