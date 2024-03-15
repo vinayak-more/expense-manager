@@ -71,7 +71,7 @@ export class TransactionEditComponent implements OnInit {
         this.editMode = true;
         const transaction = this.transactionService.getTransaction(+params['id']);
         this.onTransactionTypeChange(transaction.transactionType);
-        this.formGroup.setValue({
+        this.formGroup.patchValue({
           ...transaction,
         });
       } else {
