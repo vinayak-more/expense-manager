@@ -3,7 +3,7 @@ import { Transaction } from '../model/transaction.model';
 import { TransactionType } from '../model/transaction-type.enum';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
-import { Subject, map } from 'rxjs';
+import { Subject, map, take } from 'rxjs';
 import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query, where } from '@angular/fire/firestore';
 
 @Injectable({
@@ -12,6 +12,7 @@ import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query
 export class TransactionService {
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
+  public transactions$ = new Subject<Map<string, Transaction[]>>();
 
   transactionList: Transaction[] = [];
   constructor(
@@ -123,10 +124,16 @@ export class TransactionService {
   public onNextMonth(){
     this.selectedMonth.setMonth(this.selectedMonth.getMonth() + 1);
     this.selectedMonth$.next(this.selectedMonth);
+    this.getTransactions$().pipe(take(1)).subscribe(data => {
+      this.transactions$.next(data);
+    });
   }
 
   public onPrevMonth(){
     this.selectedMonth.setMonth(this.selectedMonth.getMonth() - 1);
     this.selectedMonth$.next(this.selectedMonth);
+    this.getTransactions$().pipe(take(1)).subscribe(data => {
+      this.transactions$.next(data);
+    });
   }
 }

@@ -3,7 +3,7 @@ import { Transaction } from '../../model/transaction.model';
 import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../service/transaction.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-list',
@@ -14,20 +14,16 @@ import { Subscription } from 'rxjs';
 })
 export class TransactionListComponent implements OnInit, OnDestroy{
   transactionMap:Map<string, Transaction[]> | null = null;
-  selectedMonthSub: Subscription;
   transactionsSub: Subscription;
 
   constructor(private transactionService: TransactionService){}
 
   ngOnInit(): void {
-    this.transactionsSub = this.transactionService.getTransactions$().subscribe( transactionMap => this.transactionMap = transactionMap);
-    this.selectedMonthSub = this.transactionService.getSelectedMonth$().subscribe(month=>{
-      // this.transactionMap = this.transactionService.getTransactions();
-    });
+    this.transactionService.getTransactions$().pipe(take(1)).subscribe( transactionMap => this.transactionMap = transactionMap);
+    this.transactionsSub = this.transactionService.transactions$.subscribe(data => this.transactionMap = data);
   }
 
   ngOnDestroy(): void {
-    this.selectedMonthSub.unsubscribe();
     this.transactionsSub.unsubscribe();
   }
 }
