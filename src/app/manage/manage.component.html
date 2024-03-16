@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div>
+        <button mat-icon-button (click)="onBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span style="vertical-align: super;">
+            <h2 style="display: inline-block;">Manage</h2>
+        </span>
+    </div>
+    <div>
+        <mat-grid-list cols="2" rowHeight="2:1">
+            <mat-grid-tile>
+                <div class="d-flex flex-column align-items-center">
+                    <div>
+                        <button mat-icon-button class="btn-height"><mat-icon class="scaled-icon">account_balance</mat-icon></button>
+                    </div>
+                    <div>Accounts</div>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="d-flex flex-column align-items-center">
+                    <div>
+                        <button mat-icon-button class="btn-height"><mat-icon class="scaled-icon">category</mat-icon></button>
+                    </div>
+                    <div>Category</div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

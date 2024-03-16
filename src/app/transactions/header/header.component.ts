@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TransactionService } from '../../service/transaction.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-header',
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selectedMonthSub:Subscription;
 
   constructor(
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onPrevMonth() {
     this.transactionService.onPrevMonth();
+  }
+
+  onManage(){
+    this.router.navigate(['manage']);
   }
   ngOnDestroy(): void {
     this.selectedMonthSub.unsubscribe();

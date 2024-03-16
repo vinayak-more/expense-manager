@@ -14,7 +14,6 @@ export class TransactionService {
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
   public transactions$ = new ReplaySubject<Map<string, Transaction[]>>();
-  db: Firestore;
   transactions: Transaction[] = [];
 
   constructor(
@@ -23,7 +22,6 @@ export class TransactionService {
     private store: Firestore,
   ) { 
     this.emitTransations();
-    this.db = getFirestore();
   }
 
   public getDate(date: Date | Timestamp): Date{
