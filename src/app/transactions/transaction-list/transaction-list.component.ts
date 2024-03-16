@@ -19,8 +19,7 @@ export class TransactionListComponent implements OnInit, OnDestroy{
   constructor(private transactionService: TransactionService){}
 
   ngOnInit(): void {
-    this.transactionService.getTransactions$().pipe(take(1)).subscribe( transactionMap => this.transactionMap = transactionMap);
-    this.transactionsSub = this.transactionService.transactions$.subscribe(data => this.transactionMap = data);
+    this.transactionsSub = this.transactionService.transactions$.subscribe( transactionMap => this.transactionMap = transactionMap);
   }
 
   ngOnDestroy(): void {

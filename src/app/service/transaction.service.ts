@@ -3,7 +3,7 @@ import { Transaction } from '../model/transaction.model';
 import { TransactionType } from '../model/transaction-type.enum';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
-import { Subject, map, take } from 'rxjs';
+import { ReplaySubject, Subject, map, take } from 'rxjs';
 import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query, where } from '@angular/fire/firestore';
 
 @Injectable({
@@ -12,14 +12,15 @@ import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query
 export class TransactionService {
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
-  public transactions$ = new Subject<Map<string, Transaction[]>>();
+  public transactions$ = new ReplaySubject<Map<string, Transaction[]>>();
 
-  transactionList: Transaction[] = [];
   constructor(
     private accountService: AccountService,
     private categoryService: CategoryService,
     private store: Firestore,
-  ) { }
+  ) { 
+    this.emitTransations();
+  }
 
   
 
@@ -30,7 +31,7 @@ export class TransactionService {
     return date.toLocaleDateString('es-CL');
   }
 
-  public getTransactions$(){
+  private getTransactions$(){
     return collectionData(query(
       collection(this.store, 'txn'), 
       where('monthYear', '==', this.getMonthYear(this.selectedMonth))))
@@ -69,30 +70,7 @@ export class TransactionService {
     return date.getMonth() + '-' + date.getFullYear();
   }
 
-  public getTransactions() {
-    const accountMap = this.getAccountMap();
-    const categoryMap = this.getCategoryMap();
-    const transactions: Transaction[] = [];
-    this.transactionList.forEach(transaction => {
-      if(transaction.date.getMonth() != this.selectedMonth.getMonth()) return;
-      if(transaction.date.getFullYear() != this.selectedMonth.getFullYear()) return;
-
-      const newTransaciton = { ...transaction };
-      newTransaciton.accountName = accountMap.get(transaction.account);
-      newTransaciton.categoryName = categoryMap.get(transaction.category);
-      newTransaciton.toName = accountMap.get(transaction.to);
-      transactions.push(newTransaciton)
-    })
-    return transactions;
-  }
-
-  public getTransaction(id: number) {
-    return this.transactionList.find(transaction => transaction.id === id);
-  }
-
   public async saveTransaction(transaction: Transaction) {
-    transaction.id = this.transactionList.length,
-    this.transactionList.push(transaction);
     await addDoc(collection(this.store, 'txn'), transaction);
   }
 
@@ -108,9 +86,9 @@ export class TransactionService {
     return categoryMap;
   }
 
+  //TODO
   public updateTransaction(transaction: Transaction){
-    const index = this.transactionList.findIndex(ele=> ele.id == transaction.id);
-    this.transactionList[index] = transaction;
+
   }
 
   public getSelectedMonth(){
@@ -124,14 +102,16 @@ export class TransactionService {
   public onNextMonth(){
     this.selectedMonth.setMonth(this.selectedMonth.getMonth() + 1);
     this.selectedMonth$.next(this.selectedMonth);
-    this.getTransactions$().pipe(take(1)).subscribe(data => {
-      this.transactions$.next(data);
-    });
+    this.emitTransations();
   }
 
   public onPrevMonth(){
     this.selectedMonth.setMonth(this.selectedMonth.getMonth() - 1);
     this.selectedMonth$.next(this.selectedMonth);
+    this.emitTransations();
+  }
+
+  private emitTransations(){
     this.getTransactions$().pipe(take(1)).subscribe(data => {
       this.transactions$.next(data);
     });

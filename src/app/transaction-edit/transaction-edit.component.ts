@@ -45,7 +45,7 @@ export class TransactionEditComponent implements OnInit {
   editMode: boolean = false;
 
   formGroup = new FormGroup<TransactionForm>({
-    id: new FormControl(null),
+    id: new FormControl(new Date().getTime()),
     transactionType: new FormControl(TransactionType.DEBIT, { nonNullable: true }),
     date: new FormControl(new Date(), Validators.required),
     account: new FormControl(null, Validators.required),
@@ -66,18 +66,27 @@ export class TransactionEditComponent implements OnInit {
     this.accounts = this.accountService.getAccounts();
     this.categories = this.categoryService.getCategories().filter(category => category.transactionType === this.formGroup.value.transactionType);
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
-    this.route.params.subscribe((params: Params) => {
-      if (params['id']) {
+    this.route.data.subscribe((data: Transaction)=>{
+      if(data){
         this.editMode = true;
-        const transaction = this.transactionService.getTransaction(+params['id']);
-        this.onTransactionTypeChange(transaction.transactionType);
-        this.formGroup.patchValue({
-          ...transaction,
-        });
+        this.onTransactionTypeChange(data.transactionType);
+        this.formGroup.patchValue(data);
       } else {
         this.editMode = false;
       }
-    })
+    });
+    // this.route.params.subscribe((params: Params) => {
+    //   if (params['id']) {
+    //     this.editMode = true;
+    //     const transaction = this.transactionService.getTransaction(+params['id']);
+    //     this.onTransactionTypeChange(transaction.transactionType);
+    //     this.formGroup.patchValue({
+    //       ...transaction,
+    //     });
+    //   } else {
+    //     this.editMode = false;
+    //   }
+    // })
   }
 
   onTransactionTypeChange(type: TransactionType) {

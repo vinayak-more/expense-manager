@@ -32,6 +32,9 @@ export class TransactionItemComponent {
   constructor(private router:Router){}
 
   onClick(transaction: Transaction){
-    this.router.navigate(['transactions', 'edit', transaction.id]); 
+    this.router.navigate(
+      ['transactions', 'edit', transaction.id], 
+      {state : transaction}
+      ); 
   }
 }
