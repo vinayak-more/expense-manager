@@ -34,7 +34,7 @@ export class TransactionItemComponent {
   onClick(transaction: Transaction){
     this.router.navigate(
       ['transactions', 'edit', transaction.id], 
-      {state : transaction}
+      {state : {'transaction': {...transaction}}}
       ); 
   }
 }

@@ -13,4 +13,5 @@ export interface Transaction{
     accountName?:string,
     categoryName?:string,
     toName?:string,
+    ref?:string,
 }

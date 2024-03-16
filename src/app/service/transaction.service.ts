@@ -4,7 +4,8 @@ import { TransactionType } from '../model/transaction-type.enum';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
 import { ReplaySubject, Subject, map, take } from 'rxjs';
-import { Firestore, Timestamp, addDoc, collection, collectionData, getDoc, query, where } from '@angular/fire/firestore';
+import { Firestore, Timestamp, addDoc, collection, collectionData, doc, getDoc, getFirestore, query, updateDoc, where } from '@angular/fire/firestore';
+import { getDocs } from '@firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class TransactionService {
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
   public transactions$ = new ReplaySubject<Map<string, Transaction[]>>();
+  db: Firestore;
+  transactions: Transaction[] = [];
 
   constructor(
     private accountService: AccountService,
@@ -20,9 +23,15 @@ export class TransactionService {
     private store: Firestore,
   ) { 
     this.emitTransations();
+    this.db = getFirestore();
   }
 
-  
+  public getDate(date: Date | Timestamp): Date{
+    if(date instanceof Timestamp){
+      return date.toDate();
+    }
+    return date;
+  }
 
   public getDateAsString(date: Date | Timestamp){
     if(date instanceof Timestamp){
@@ -32,16 +41,18 @@ export class TransactionService {
   }
 
   private getTransactions$(){
-    return collectionData(query(
+    return getDocs(query(
       collection(this.store, 'txn'), 
       where('monthYear', '==', this.getMonthYear(this.selectedMonth))))
-      .pipe(
-        map((transactions: Transaction[])=>{
-        return this.initTransactions(transactions);
-      }),
-      map((transactions: Transaction[])=>{
-        return this.getTransactionsGroupByDate(transactions);
-      }));
+      .then(snapshot=>{
+        const transactions: Transaction[] = []
+        snapshot.forEach(docData=>{
+          transactions.push({...<Transaction>docData.data(), 'ref': docData.id});
+        });
+        console.log(transactions);
+        this.initTransactions(transactions);
+        return this.getTransactionsGroupByDate(transactions)
+      })
   }
 
   private initTransactions(transactions: Transaction[]){
@@ -72,6 +83,7 @@ export class TransactionService {
 
   public async saveTransaction(transaction: Transaction) {
     await addDoc(collection(this.store, 'txn'), transaction);
+    this.emitTransations();
   }
 
   private getAccountMap() {
@@ -86,9 +98,9 @@ export class TransactionService {
     return categoryMap;
   }
 
-  //TODO
-  public updateTransaction(transaction: Transaction){
-
+  public async updateTransaction(transaction: Transaction){
+    await updateDoc(doc(this.store, 'txn', transaction.ref), {...transaction});
+    this.emitTransations();
   }
 
   public getSelectedMonth(){
@@ -112,8 +124,6 @@ export class TransactionService {
   }
 
   private emitTransations(){
-    this.getTransactions$().pipe(take(1)).subscribe(data => {
-      this.transactions$.next(data);
-    });
+    this.getTransactions$().then(data=> this.transactions$.next(data));
   }
 }

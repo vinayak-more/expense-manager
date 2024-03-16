@@ -52,6 +52,7 @@ export class TransactionEditComponent implements OnInit {
     category: new FormControl(null, Validators.required),
     amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
     note: new FormControl(null),
+    ref: new FormControl(''),
   });
 
   constructor(
@@ -60,33 +61,26 @@ export class TransactionEditComponent implements OnInit {
     private transactionService: TransactionService,
     private accountService: AccountService,
     private categoryService: CategoryService,
-  ) { }
+  ) {
+
+    let transaction = null;
+    if (this.router.getCurrentNavigation()?.extras?.state) {
+      transaction = <Transaction>this.router.getCurrentNavigation()?.extras?.state['transaction'];
+      transaction = { ...transaction, 'date': this.transactionService.getDate(transaction.date) };
+    }
+    if (transaction) {
+      this.editMode = true;
+      this.onTransactionTypeChange(transaction.transactionType);
+      this.formGroup.patchValue(transaction);
+    } else {
+      this.editMode = false;
+    }
+  }
 
   ngOnInit(): void {
     this.accounts = this.accountService.getAccounts();
     this.categories = this.categoryService.getCategories().filter(category => category.transactionType === this.formGroup.value.transactionType);
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
-    this.route.data.subscribe((data: Transaction)=>{
-      if(data){
-        this.editMode = true;
-        this.onTransactionTypeChange(data.transactionType);
-        this.formGroup.patchValue(data);
-      } else {
-        this.editMode = false;
-      }
-    });
-    // this.route.params.subscribe((params: Params) => {
-    //   if (params['id']) {
-    //     this.editMode = true;
-    //     const transaction = this.transactionService.getTransaction(+params['id']);
-    //     this.onTransactionTypeChange(transaction.transactionType);
-    //     this.formGroup.patchValue({
-    //       ...transaction,
-    //     });
-    //   } else {
-    //     this.editMode = false;
-    //   }
-    // })
   }
 
   onTransactionTypeChange(type: TransactionType) {
@@ -116,7 +110,7 @@ export class TransactionEditComponent implements OnInit {
     this.onBack();
   }
 
-  private getMonthYear(date:Date){
+  private getMonthYear(date: Date) {
     return date.getMonth() + '-' + date.getFullYear();
   }
 
@@ -135,4 +129,5 @@ interface TransactionForm {
   note?: FormControl<string | null>,
   category?: FormControl<number | null>,
   to?: FormControl<number | null>,
+  ref?:FormControl<string | null>,
 }
