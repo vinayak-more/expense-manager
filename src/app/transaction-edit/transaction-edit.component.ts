@@ -48,8 +48,8 @@ export class TransactionEditComponent implements OnInit {
     id: new FormControl(new Date().getTime()),
     transactionType: new FormControl(TransactionType.DEBIT, { nonNullable: true }),
     date: new FormControl(new Date(), Validators.required),
-    account: new FormControl(null, Validators.required),
-    category: new FormControl(null, Validators.required),
+    accountId: new FormControl(null, Validators.required),
+    categoryId: new FormControl(null, Validators.required),
     amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
     note: new FormControl(null),
     ref: new FormControl(''),
@@ -66,7 +66,7 @@ export class TransactionEditComponent implements OnInit {
     let transaction = null;
     if (this.router.getCurrentNavigation()?.extras?.state) {
       transaction = <Transaction>this.router.getCurrentNavigation()?.extras?.state['transaction'];
-      transaction = { ...transaction, 'date': this.transactionService.getDate(transaction.date) };
+      transaction = { ...transaction, 'date': this.getDateAsString(transaction.date) };
     }
     if (transaction) {
       this.editMode = true;
@@ -85,15 +85,19 @@ export class TransactionEditComponent implements OnInit {
 
   onTransactionTypeChange(type: TransactionType) {
     if (type === TransactionType.TRANSFER) {
-      this.formGroup.removeControl('category');
-      this.formGroup.addControl('to', new FormControl(null, Validators.required));
+      this.formGroup.removeControl('categoryId');
+      this.formGroup.addControl('toAccountId', new FormControl(null, Validators.required));
     } else {
-      this.formGroup.removeControl('to');
+      this.formGroup.removeControl('toAccountId');
       this.categories = this.categoryService.getCategories().filter(category => category.transactionType === type);
-      if (this.formGroup.contains('category'))
-        this.formGroup.controls.category.reset();
-      else this.formGroup.addControl('category', new FormControl(null, Validators.required));
+      if (this.formGroup.contains('categoryId'))
+        this.formGroup.controls.categoryId.reset();
+      else this.formGroup.addControl('categoryId', new FormControl(null, Validators.required));
     }
+  }
+
+  private getDateAsString(date: Date) {
+    return date.toLocaleDateString('es-CL');
   }
 
   onSubmit() {
@@ -124,10 +128,10 @@ interface TransactionForm {
   id?: FormControl<number | null>,
   transactionType: FormControl<TransactionType>,
   date: FormControl<Date>,
-  account: FormControl<number | null>,
+  accountId: FormControl<number | null>,
   amount: FormControl<number | null>,
   note?: FormControl<string | null>,
-  category?: FormControl<number | null>,
-  to?: FormControl<number | null>,
+  categoryId?: FormControl<number | null>,
+  toAccountId?: FormControl<number | null>,
   ref?:FormControl<string | null>,
 }

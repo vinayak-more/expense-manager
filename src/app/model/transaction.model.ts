@@ -4,14 +4,13 @@ export interface Transaction{
     transactionType: TransactionType,
     date:Date,
     monthYear?:string,
-    account:number,
+    accountId:number,
     amount:number,
     note?:string
-    category?:number,
-    to?:number,
+    categoryId?:number,
+    toAccountId?:number,
     id?:number,
     accountName?:string,
     categoryName?:string,
     toName?:string,
-    ref?:string,
 }

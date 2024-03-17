@@ -1,4 +1,7 @@
-# TODO
-1. Routing animations
-2. Account Service
-3. Category Service
+Build steps
+
+npm run build
+
+npx cap sync
+
+npx run android

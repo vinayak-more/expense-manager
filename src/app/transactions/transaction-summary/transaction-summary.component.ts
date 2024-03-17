@@ -27,8 +27,6 @@ export class TransactionSummaryComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.transactionsSub = this.transactionService.transactions$
-    .pipe(map((data: Map<string, Transaction[]>)=> Array.from(data.values())))
-    .pipe(map((transactions2d:Transaction[][])=> [].concat(...transactions2d)))
     .subscribe((transactions: Transaction[]) => this.updateStats(transactions));
   }
 

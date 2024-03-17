@@ -23,26 +23,26 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Account</mat-label>
-                <mat-select formControlName='account'>
+                <mat-select formControlName='accountId'>
                     @for (account of accounts; track account.id) {
                     <mat-option [value]="account.id">{{account.name}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
-            @if ( formGroup.controls.to ) {
+            @if ( formGroup.controls.toAccountId ) {
             <mat-form-field>
                 <mat-label>To</mat-label>
-                <mat-select formControlName='to'>
+                <mat-select formControlName='toAccountId'>
                     @for (account of accounts; track account.id) {
                     <mat-option [value]="account.id">{{account.name}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
             }
-            @if (formGroup.controls.category) {
+            @if (formGroup.controls.categoryId) {
             <mat-form-field>
                 <mat-label>Category</mat-label>
-                <mat-select formControlName='category'>
+                <mat-select formControlName='categoryId'>
                     @for (category of categories; track category.id) {
                     <mat-option [value]="category.id">{{category.name}}</mat-option>
                     }
