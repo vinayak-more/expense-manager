@@ -52,7 +52,6 @@ export class TransactionEditComponent implements OnInit {
     categoryId: new FormControl(null, Validators.required),
     amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
     note: new FormControl(null),
-    ref: new FormControl(''),
   });
 
   constructor(
@@ -66,7 +65,7 @@ export class TransactionEditComponent implements OnInit {
     let transaction = null;
     if (this.router.getCurrentNavigation()?.extras?.state) {
       transaction = <Transaction>this.router.getCurrentNavigation()?.extras?.state['transaction'];
-      transaction = { ...transaction, 'date': this.getDateAsString(transaction.date) };
+      transaction = { ...transaction, 'date': this.stringToDate(transaction.dateStr) };
     }
     if (transaction) {
       this.editMode = true;
@@ -83,6 +82,8 @@ export class TransactionEditComponent implements OnInit {
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
   }
 
+
+
   onTransactionTypeChange(type: TransactionType) {
     if (type === TransactionType.TRANSFER) {
       this.formGroup.removeControl('categoryId');
@@ -96,14 +97,12 @@ export class TransactionEditComponent implements OnInit {
     }
   }
 
-  private getDateAsString(date: Date) {
-    return date.toLocaleDateString('es-CL');
-  }
 
   onSubmit() {
     const transaction = {
       ...this.formGroup.getRawValue(),
       'monthYear': this.getMonthYear(this.formGroup.value.date),
+      'dateStr': this.getDateToString(this.formGroup.value.date),
     };
     if (this.editMode) {
       this.transactionService.updateTransaction(transaction);
@@ -114,6 +113,29 @@ export class TransactionEditComponent implements OnInit {
     this.onBack();
   }
 
+  /**
+   * 
+   * @param dateStr Date in string with pattern DD-MM-yyyy i.e 17-03-2024
+   * @returns javascript date object
+   */
+  private stringToDate(dateStr: string): Date {
+    let splits = dateStr.split("-");
+    if (splits.length != 3) return null;
+    const date = new Date();
+    date.setDate(parseInt(splits[0]));
+    date.setMonth(parseInt(splits[1]) - 1);
+    date.setFullYear(parseInt(splits[2]));
+    return date;
+  }
+
+  /**
+   * 
+   * @param date javascript date object
+   * @returns date in string with pattern DD-MM-yyyy i.e 17-03-2024
+   */
+  private getDateToString(date: Date) {
+    return date.toLocaleDateString('es-CL');
+  }
   private getMonthYear(date: Date) {
     return date.getMonth() + '-' + date.getFullYear();
   }
@@ -133,5 +155,4 @@ interface TransactionForm {
   note?: FormControl<string | null>,
   categoryId?: FormControl<number | null>,
   toAccountId?: FormControl<number | null>,
-  ref?:FormControl<string | null>,
 }

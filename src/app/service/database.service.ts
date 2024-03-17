@@ -13,7 +13,7 @@ const DB_NAME='expense-manager';
 export class DatabaseService {
   private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
   private db!: SQLiteDBConnection;
-
+  public initStatus$ = new ReplaySubject<boolean>();
   public transactions$ = new ReplaySubject<Transaction[]>();
 
   constructor() { }
@@ -31,6 +31,18 @@ export class DatabaseService {
 
     await this.db.execute(schema);
 
+    this.loadTransactions();
+
+    const transaction = await this.db.query('SELECT * FROM TXN');
+
+    console.log("$$ Transactions",transaction.values);
+
+    const accounts = await this.db.query('SELECT * FROM ACCOUNT');
+    console.log("$$ Accounts",accounts.values);
+
+    const category = await this.db.query('SELECT * FROM CATEGORY');
+    console.log("$$ categories",category.values);
+
   }
 
   async loadTransactions(){
@@ -39,8 +51,8 @@ export class DatabaseService {
   }
 
   async addTransaction(transaction: Transaction){
-    const query = ` INSERT INTO TXN ( accountName, categoryName, toName, amount, note, monthYear)
-                    VALUES ('${transaction.accountName}', '${transaction.categoryName}', '${transaction.toName}', ${transaction.amount}, '${transaction.note}', '${transaction.monthYear}')
+    const query = ` INSERT INTO TXN ( dateStr, accountId, categoryId, toAccountId, amount, note, monthYear)
+                    VALUES ('${transaction.dateStr}',${transaction.accountId}, ${transaction.categoryId}, ${transaction.toAccountId || null}, ${transaction.amount}, ${ transaction.note ? '\'' + transaction.note + '\'' : '\'\''}, '${transaction.monthYear}')
     `;
     const result = await this.db.execute(query);
     this.loadTransactions();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Transaction } from '../model/transaction.model';
 import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
@@ -8,7 +8,7 @@ import { DatabaseService } from './database.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService {
+export class TransactionService implements OnInit{
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
   public transactions$ = new ReplaySubject<Transaction[]>();
@@ -19,12 +19,13 @@ export class TransactionService {
     private categoryService: CategoryService,
     private database: DatabaseService,
   ) { 
-    this.emitTransations();
+    
+    console.log("transaction service oninit called");
+    this.database.transactions$.subscribe(data => this.transactions$.next(this.initTransactions(data)));
   }
 
-  
-
-
+  ngOnInit(): void {
+  }
 
   private initTransactions(transactions: Transaction[]){
     const accountMap = this.getAccountMap();
@@ -37,20 +38,7 @@ export class TransactionService {
     return transactions;
   }
 
-  // public getTransactionsGroupByDate(transactions: Transaction[]) {
-  //   const map = new Map<string, Transaction[]>();
-  //   for (let transaction of transactions) {
-  //     if (map.has(this.getDateAsString(transaction.date))) {
-  //       map.get(this.getDateAsString(transaction.date))?.push(transaction);
-  //     } else {
-  //       map.set(this.getDateAsString(transaction.date), [transaction]);
-  //     }
-  //   }
-  //   return map;
-  // }
-
   public async saveTransaction(transaction: Transaction) {
-    //await addDoc(collection(this.store, 'txn'), transaction);
     console.log('saving transaction', transaction);
     this.database.addTransaction(transaction);
     this.emitTransations();
@@ -93,6 +81,6 @@ export class TransactionService {
   }
 
   private emitTransations(){
-    this.database.transactions$.subscribe(data => this.transactions$.next(data));
+    
   }
 }

@@ -23,17 +23,13 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     .subscribe(transactions => this.transactionMap = this.getTransactionsGroupByDate(transactions));
   }
 
-  private getDateAsString(date: Date) {
-    return date.toLocaleDateString('es-CL');
-  }
-
   private getTransactionsGroupByDate(transactions: Transaction[]): Map<string, Transaction[]> {
     const map = new Map<string, Transaction[]>();
     for (let transaction of transactions) {
-      if (map.has(this.getDateAsString(transaction.date))) {
-        map.get(this.getDateAsString(transaction.date))?.push(transaction);
+      if (map.has(transaction.dateStr)) {
+        map.get(transaction.dateStr)?.push(transaction);
       } else {
-        map.set(this.getDateAsString(transaction.date), [transaction]);
+        map.set(transaction.dateStr, [transaction]);
       }
     }
     return map;
