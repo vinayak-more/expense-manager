@@ -30,24 +30,19 @@ export class DatabaseService {
     await this.db.open();
 
     await this.db.execute(schema);
-
-    this.loadTransactions();
-
-    const transaction = await this.db.query('SELECT * FROM TXN');
-
-    console.log("$$ Transactions",transaction.values);
-
-    const accounts = await this.db.query('SELECT * FROM ACCOUNT');
-    console.log("$$ Accounts",accounts.values);
-
-    const category = await this.db.query('SELECT * FROM CATEGORY');
-    console.log("$$ categories",category.values);
-
+    
+    this.initStatus$.next(true);
   }
 
   async loadTransactions(){
     const transactions = await this.db.query('SELECT * FROM TXN');
     this.transactions$.next(transactions.values || null);
+  }
+
+  async getTransactionsByMonthYear(monthYear: string): Promise<Transaction[]>{
+    const query = ` SELECT * FROM TXN WHERE monthYear = '${monthYear}'`;
+    const result = await this.db.query(query);
+    return result.values;
   }
 
   async addTransaction(transaction: Transaction){

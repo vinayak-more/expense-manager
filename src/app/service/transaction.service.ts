@@ -8,7 +8,7 @@ import { DatabaseService } from './database.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService implements OnInit{
+export class TransactionService{
   selectedMonth = new Date();
   selectedMonth$ = new Subject<Date>();
   public transactions$ = new ReplaySubject<Transaction[]>();
@@ -19,12 +19,7 @@ export class TransactionService implements OnInit{
     private categoryService: CategoryService,
     private database: DatabaseService,
   ) { 
-    
-    console.log("transaction service oninit called");
-    this.database.transactions$.subscribe(data => this.transactions$.next(this.initTransactions(data)));
-  }
-
-  ngOnInit(): void {
+    database.initStatus$.pipe(take(1)).subscribe(()=>this.emitTransations());
   }
 
   private initTransactions(transactions: Transaction[]){
@@ -57,7 +52,7 @@ export class TransactionService implements OnInit{
   }
 
   public async updateTransaction(transaction: Transaction){
-    this.database.updateTransaction(transaction);
+    this.database.updateTransaction(transaction)
     this.emitTransations();
   }
 
@@ -82,6 +77,11 @@ export class TransactionService implements OnInit{
   }
 
   private emitTransations(){
-    
+    this.database.getTransactionsByMonthYear(this.getMonthYear(this.selectedMonth))
+    .then(value => this.transactions$.next(this.initTransactions(value)));
+  }
+
+  private getMonthYear(date: Date):string{
+    return date.getMonth()+'-'+date.getFullYear();
   }
 }
