@@ -57,6 +57,7 @@ export class TransactionService implements OnInit{
   }
 
   public async updateTransaction(transaction: Transaction){
+    this.database.updateTransaction(transaction);
     this.emitTransations();
   }
 

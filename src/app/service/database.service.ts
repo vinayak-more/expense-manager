@@ -58,4 +58,20 @@ export class DatabaseService {
     this.loadTransactions();
     return result;
   }
+
+  async updateTransaction(transaction: Transaction){
+    const query = ` UPDATE TXN SET 
+    dateStr = '${transaction.dateStr}', 
+    accountId = ${transaction.accountId},
+    categoryId = ${transaction.categoryId},
+    toAccountId = ${transaction.toAccountId || null},
+    amount = ${transaction.amount}, 
+    note = ${ transaction.note ? '\'' + transaction.note + '\'' : '\'\''},
+    monthYear = '${transaction.monthYear}'
+    WHERE id = ${transaction.id}`;
+
+    const result = await this.db.execute(query);
+    this.loadTransactions();
+    return result;
+  }
 }
