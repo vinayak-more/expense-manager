@@ -15,20 +15,17 @@ export class TransactionService{
 
   constructor(
     private repository: TransactionRepository,
-    private database: DatabaseService,
+    database: DatabaseService,
   ) { 
     database.initStatus$.pipe(take(1)).subscribe(()=>this.emitTransations());
   }
 
   public async saveTransaction(transaction: Transaction) {
-    console.log('saving transaction', transaction);
-    this.repository.saveTransaction(transaction);
-    this.emitTransations();
+    this.repository.saveTransaction(transaction).then(() => this.emitTransations());
   }
 
   public async updateTransaction(transaction: Transaction){
-    this.database.updateTransaction(transaction)
-    this.emitTransations();
+    this.repository.updateTransaction(transaction).then(() => this.emitTransations());
   }
 
   public getSelectedMonth(){

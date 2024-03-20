@@ -14,4 +14,10 @@ INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 `
 
+export const UPDATE_TRANSACTION = `
+UPDATE TXN 
+SET dateStr = ?, transactionType = ?, accountId = ?, categoryId = ?, toAccountId = ?, amount = ?, note = ?, monthYear = ?
+WHERE id = ?
+`
+
 export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A`

@@ -1,27 +1,27 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Transaction } from "../model/transaction.model";
-import { INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR } from "./queries";
+import { INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR, UPDATE_TRANSACTION } from "./queries";
 
 @Injectable({
     providedIn: 'root'
 })
-export class TransactionRepository{
+export class TransactionRepository {
 
-    constructor(private databaseService: DatabaseService){}
+    constructor(private databaseService: DatabaseService) { }
 
-    public async getTransactionsByMonthYear(monthYear:string):Promise<Transaction[]>{
+    public async getTransactionsByMonthYear(monthYear: string): Promise<Transaction[]> {
         const result = await this.databaseService.executeQuery(db => {
             return db.query(SELECT_TRANSACTIONS_BY_MONTHYEAR, [monthYear]);
         });
         return result.values;
     }
 
-    public async saveTransaction(transaction: Transaction){
-        return this.databaseService.executeQuery((db)=>{
-            return db.executeSet([{
+    public async saveTransaction(transaction: Transaction) {
+        return this.databaseService.executeQuery((db) => {
+            return db.executeTransaction([{
                 statement: INSERT_TRANSACTION,
-                values:[ 
+                values: [
                     transaction.dateStr,
                     transaction.transactionType,
                     transaction.accountId,
@@ -31,7 +31,26 @@ export class TransactionRepository{
                     transaction.note || '',
                     transaction.monthYear
                 ]
-            }], true)
+            }])
+        });
+    }
+
+    public async updateTransaction(transaction: Transaction) {
+        return this.databaseService.executeQuery((db) => {
+            return db.executeTransaction([{
+                statement: UPDATE_TRANSACTION,
+                values: [
+                    transaction.dateStr,
+                    transaction.transactionType,
+                    transaction.accountId,
+                    transaction.categoryId || null,
+                    transaction.toAccountId || null,
+                    transaction.amount,
+                    transaction.note || '',
+                    transaction.monthYear,
+                    transaction.id
+                ]
+            }])
         });
     }
 }

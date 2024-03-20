@@ -36,30 +36,6 @@ export class DatabaseService {
     this.initStatus$.next(true);
   }
 
-  async addTransaction(transaction: Transaction){
-    const query = ` INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear)
-                    VALUES ('${transaction.dateStr}','${transaction.transactionType}',${transaction.accountId}, ${transaction.categoryId || null}, ${transaction.toAccountId || null}, ${transaction.amount}, ${ transaction.note ? '\'' + transaction.note + '\'' : '\'\''}, '${transaction.monthYear}')
-    `;
-    const result = await this.db.execute(query);
-    return result;
-  }
-
-  async updateTransaction(transaction: Transaction){
-    const query = ` UPDATE TXN SET 
-    dateStr = '${transaction.dateStr}', 
-    transactionType = '${transaction.transactionType}',
-    accountId = ${transaction.accountId},
-    categoryId = ${transaction.categoryId || null},
-    toAccountId = ${transaction.toAccountId || null},
-    amount = ${transaction.amount}, 
-    note = ${ transaction.note ? '\'' + transaction.note + '\'' : '\'\''},
-    monthYear = '${transaction.monthYear}'
-    WHERE id = ${transaction.id}`;
-
-    const result = await this.db.execute(query);
-    return result;
-  }
-
   /**
    * this function will handle the sqlite isopen and isclosed automatically for you.
    * @param callback: The callback function that will execute multiple SQLiteDBConnection commands or other stuff.
