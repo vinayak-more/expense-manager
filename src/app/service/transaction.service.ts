@@ -17,30 +17,15 @@ export class TransactionService{
 
   constructor(
     private repository: TransactionRepository,
-    private categoryService: CategoryService,
     private database: DatabaseService,
   ) { 
     database.initStatus$.pipe(take(1)).subscribe(()=>this.emitTransations());
-  }
-
-  private initTransactions(transactions: Transaction[]){
-    const categoryMap = this.getCategoryMap();
-    transactions.forEach( transaction =>{
-      transaction.categoryName = categoryMap.get(transaction.categoryId);
-    })
-    return transactions;
   }
 
   public async saveTransaction(transaction: Transaction) {
     console.log('saving transaction', transaction);
     this.database.addTransaction(transaction);
     this.emitTransations();
-  }
-
-  private getCategoryMap() {
-    const categoryMap = new Map<number, string>();
-    this.categoryService.getCategories().forEach(category => categoryMap.set(category.id, category.name));
-    return categoryMap;
   }
 
   public async updateTransaction(transaction: Transaction){
@@ -70,10 +55,18 @@ export class TransactionService{
 
   private emitTransations(){
     this.repository.getTransactionsByMonthYear(this.getMonthYear(this.selectedMonth))
-    .then(value => this.transactions$.next(this.initTransactions(value)));
+    .then(value => this.transactions$.next(value));
   }
 
   private getMonthYear(date: Date):string{
     return date.getMonth()+'-'+date.getFullYear();
+  }
+
+  private getSelectedMonthYear(){
+    return this.getMonthYear(this.selectedMonth);
+  }
+
+  public async getTransactions():Promise<Transaction[]>{
+    return this.repository.getTransactionsByMonthYear(this.getSelectedMonthYear());
   }
 }
