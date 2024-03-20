@@ -6,7 +6,7 @@ A.accountName as toName,
 C.categoryName
 FROM TXN T 
 JOIN ACCOUNT A ON T.accountId = A.Id 
-JOIN CATEGORY C ON T.categoryId = C.Id
+LEFT JOIN CATEGORY C ON T.categoryId = C.Id
 WHERE monthYear = ?
 `
 export const INSERT_TRANSACTION = `
