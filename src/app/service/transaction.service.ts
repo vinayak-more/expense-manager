@@ -1,7 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Transaction } from '../model/transaction.model';
-import { AccountService } from './account.service';
-import { CategoryService } from './category.service';
 import { ReplaySubject, Subject, map, take } from 'rxjs';
 import { DatabaseService } from './database.service';
 import { TransactionRepository } from '../repository/transaction.repository';
@@ -24,7 +22,7 @@ export class TransactionService{
 
   public async saveTransaction(transaction: Transaction) {
     console.log('saving transaction', transaction);
-    this.database.addTransaction(transaction);
+    this.repository.saveTransaction(transaction);
     this.emitTransations();
   }
 

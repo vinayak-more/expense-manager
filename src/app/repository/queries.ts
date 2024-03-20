@@ -9,5 +9,9 @@ JOIN ACCOUNT A ON T.accountId = A.Id
 JOIN CATEGORY C ON T.categoryId = C.Id
 WHERE monthYear = ?
 `
+export const INSERT_TRANSACTION = `
+INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+`
 
 export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A`
