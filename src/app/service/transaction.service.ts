@@ -26,7 +26,7 @@ export class TransactionService{
     const accountMap = this.getAccountMap();
     const categoryMap = this.getCategoryMap();
     transactions.forEach( transaction =>{
-      transaction.accountName = accountMap.get(transaction.accountId);
+      // transaction.accountName = accountMap.get(transaction.accountId);
       transaction.categoryName = categoryMap.get(transaction.categoryId);
       transaction.toName = accountMap.get(transaction.toAccountId);
     })
@@ -41,7 +41,7 @@ export class TransactionService{
 
   private getAccountMap() {
     const accountMap = new Map<number, string>();
-    this.accountService.getAccounts().forEach(account => accountMap.set(account.id, account.name));
+    //this.accountService.getAccounts().forEach(account => accountMap.set(account.id, account.name));
     return accountMap;
   }
 

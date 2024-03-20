@@ -25,35 +25,27 @@ CREATE TABLE IF NOT EXISTS TXN (
   monthYear TEXT DEFAULT NULL
 );
 
-INSERT INTO ACCOUNT (id, accountName, balance, isDeleted)
-SELECT 1, 'Savings', 0, 0
-FROM ACCOUNT WHERE NOT EXISTS (SELECT id FROM ACCOUNT WHERE id = 1);
+INSERT OR IGNORE INTO ACCOUNT (id, accountName, balance, isDeleted)
+VALUES (1, 'Savings', 0, 0);
 
-INSERT INTO ACCOUNT (id, accountName, balance, isDeleted)
-SELECT 2, 'Credit Card', 0, 0
-FROM ACCOUNT WHERE NOT EXISTS (SELECT id FROM ACCOUNT WHERE id = 2);
+INSERT OR IGNORE INTO ACCOUNT (id, accountName, balance, isDeleted)
+VALUES (2, 'Credit Card', 0, 0);
 
-INSERT INTO ACCOUNT (id, accountName, balance, isDeleted)
-SELECT 3, 'Cash', 0, 0
-FROM ACCOUNT WHERE NOT EXISTS (SELECT id FROM ACCOUNT WHERE id = 3);
+INSERT OR IGNORE INTO ACCOUNT (id, accountName, balance, isDeleted)
+VALUES (3, 'Cash', 0, 0);
 
-INSERT INTO CATEGORY (id, categoryName, transactionType)
-SELECT 1, 'Food', 'DEBIT'
-FROM CATEGORY WHERE NOT EXISTS (SELECT id FROM CATEGORY WHERE id = 1);
+INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+VALUES (1, 'Food', 'DEBIT');
 
-INSERT INTO CATEGORY (id, categoryName, transactionType)
-SELECT 2, 'Transport', 'DEBIT'
-FROM CATEGORY WHERE NOT EXISTS (SELECT id FROM CATEGORY WHERE id = 2);
+INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+VALUES (2, 'Transport', 'DEBIT');
 
-INSERT INTO CATEGORY (id, categoryName, transactionType)
-SELECT 3, 'Medicine', 'DEBIT'
-FROM CATEGORY WHERE NOT EXISTS (SELECT id FROM CATEGORY WHERE id = 3);
+INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+VALUES (3, 'Medicine', 'DEBIT');
 
-INSERT INTO CATEGORY (id, categoryName, transactionType)
-SELECT 4, 'Salary', 'CREDIT'
-FROM CATEGORY WHERE NOT EXISTS (SELECT id FROM CATEGORY WHERE id = 4);
+INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+VALUES (4, 'Salary', 'CREDIT');
 
-INSERT INTO CATEGORY (id, categoryName, transactionType)
-SELECT 5, 'Refund', 'CREDIT'
-FROM CATEGORY WHERE NOT EXISTS (SELECT id FROM CATEGORY WHERE id = 5);
+INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+VALUES (5, 'Refund', 'CREDIT');
 `

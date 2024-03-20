@@ -77,7 +77,7 @@ export class TransactionEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accounts = this.accountService.getAccounts();
+    this.accountService.getAccounts().then(accounts => this.accounts = accounts);
     this.categories = this.categoryService.getCategories().filter(category => category.transactionType === this.formGroup.value.transactionType);
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
   }

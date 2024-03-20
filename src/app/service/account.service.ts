@@ -1,10 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Account } from "../model/account.model";
+import { AccountRepository } from "../repository/account.repository";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AccountService{
+
+    constructor(private accountRepository: AccountRepository){}
 
     accounts: Account[] = [
         {
@@ -25,6 +28,6 @@ export class AccountService{
     ];
 
     public getAccounts(){
-        return [...this.accounts];
+        return this.accountRepository.getAllAccounts();
     }
 }

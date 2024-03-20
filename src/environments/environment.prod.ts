@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    databaseName: 'expense-manager',
+    databaseName: 'expense-manager-vm914',
 };
