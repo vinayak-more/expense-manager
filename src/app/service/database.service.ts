@@ -36,18 +36,6 @@ export class DatabaseService {
     this.initStatus$.next(true);
   }
 
-  async getTransactionsByMonthYear(monthYear: string): Promise<Transaction[]>{
-    const query = ` SELECT T.*, A.accountName FROM TXN T JOIN ACCOUNT A ON T.accountId = A.Id WHERE monthYear = '${monthYear}' `;
-    const result = await this.db.query(query);
-    return result.values;
-  }
-
-  async getAccounts():Promise<Account[]>{
-    const query = ` SELECT * FROM ACCOUNT `;
-    const result = await this.db.query(query);
-    return result.values;
-  }
-
   async addTransaction(transaction: Transaction){
     const query = ` INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear)
                     VALUES ('${transaction.dateStr}','${transaction.transactionType}',${transaction.accountId}, ${transaction.categoryId || null}, ${transaction.toAccountId || null}, ${transaction.amount}, ${ transaction.note ? '\'' + transaction.note + '\'' : '\'\''}, '${transaction.monthYear}')

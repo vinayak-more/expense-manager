@@ -1,5 +1,8 @@
 export const SELECT_TRANSACTIONS_BY_MONTHYEAR = ` 
-SELECT T.*, A.accountName, A.accountName as toName
+SELECT 
+T.*, 
+A.accountName, 
+A.accountName as toName
 FROM TXN T JOIN ACCOUNT A ON T.accountId = A.Id 
 WHERE monthYear = ?
 `

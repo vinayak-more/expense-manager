@@ -4,6 +4,7 @@ import { AccountService } from './account.service';
 import { CategoryService } from './category.service';
 import { ReplaySubject, Subject, map, take } from 'rxjs';
 import { DatabaseService } from './database.service';
+import { TransactionRepository } from '../repository/transaction.repository';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class TransactionService{
   transactions: Transaction[] = [];
 
   constructor(
-    private accountService: AccountService,
+    private repository: TransactionRepository,
     private categoryService: CategoryService,
     private database: DatabaseService,
   ) { 
@@ -23,12 +24,9 @@ export class TransactionService{
   }
 
   private initTransactions(transactions: Transaction[]){
-    const accountMap = this.getAccountMap();
     const categoryMap = this.getCategoryMap();
     transactions.forEach( transaction =>{
-      // transaction.accountName = accountMap.get(transaction.accountId);
       transaction.categoryName = categoryMap.get(transaction.categoryId);
-      transaction.toName = accountMap.get(transaction.toAccountId);
     })
     return transactions;
   }
@@ -37,12 +35,6 @@ export class TransactionService{
     console.log('saving transaction', transaction);
     this.database.addTransaction(transaction);
     this.emitTransations();
-  }
-
-  private getAccountMap() {
-    const accountMap = new Map<number, string>();
-    //this.accountService.getAccounts().forEach(account => accountMap.set(account.id, account.name));
-    return accountMap;
   }
 
   private getCategoryMap() {
@@ -77,7 +69,7 @@ export class TransactionService{
   }
 
   private emitTransations(){
-    this.database.getTransactionsByMonthYear(this.getMonthYear(this.selectedMonth))
+    this.repository.getTransactionsByMonthYear(this.getMonthYear(this.selectedMonth))
     .then(value => this.transactions$.next(this.initTransactions(value)));
   }
 
