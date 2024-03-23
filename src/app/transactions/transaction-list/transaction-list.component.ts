@@ -4,6 +4,7 @@ import { TransactionItemComponent } from '../transaction-item/transaction-item.c
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../service/transaction.service';
 import { Subscription, take } from 'rxjs';
+import { transactions } from '../../data/transactions';
 
 @Component({
   selector: 'app-transaction-list',
@@ -13,7 +14,7 @@ import { Subscription, take } from 'rxjs';
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent implements OnInit, OnDestroy {
-  transactionMap: Map<string, Transaction[]> | null = null;
+  transactionMap: Map<string, Transaction[]> | null = this.getTransactionsGroupByDate(transactions);
   transactionsSub: Subscription;
 
   constructor(private transactionService: TransactionService) { }

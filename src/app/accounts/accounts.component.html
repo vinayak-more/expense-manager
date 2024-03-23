@@ -1,11 +1,28 @@
 <div class="container-fluid">
-    <div>
-        <button mat-icon-button (click)="onBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <span style="vertical-align: super;">
-            <h2 style="display: inline-block;">Manage Accounts</h2>
-        </span>
+    <div class="row">
+        <div class="col-10">
+            <button mat-icon-button (click)="onBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span style="vertical-align: super;">
+                <h2 style="display: inline-block;">Manage Accounts</h2>
+            </span>
+        </div>
+        <div class="col-2">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>add</mat-icon>
+                    <span>Add</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
+        </div>
     </div>
     <div class="row">
         <app-account-list></app-account-list>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
 import { AccountListComponent } from './account-list/account-list.component';
 
@@ -14,6 +15,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
 
     AccountListComponent,
   ],
@@ -24,9 +26,9 @@ export class AccountsComponent {
 
   constructor(
     private router: Router,
-  ){}
+  ) { }
 
-  onBack(){
+  onBack() {
     this.router.navigate(['']);
   }
 }

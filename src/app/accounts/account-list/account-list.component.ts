@@ -4,6 +4,7 @@ import { Account } from '../../model/account.model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgClass } from '@angular/common';
+import { accounts } from '../../data/accounts';
 
 @Component({
   selector: 'app-account-list',
@@ -18,18 +19,7 @@ import { NgClass } from '@angular/common';
 })
 export class AccountListComponent  implements OnInit{
 
-  accounts:Account[] = [
-    {
-      id: 1,
-      name: "Savings",
-      balance: 0
-    },
-    {
-      id: 2,
-      name: "Credit Card",
-      balance: 97000
-    }
-  ];
+  accounts:Account[] = accounts;
 
   constructor(private accountService: AccountService){}
 
