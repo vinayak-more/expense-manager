@@ -4,10 +4,15 @@
 @for (account of accounts; track account.id) {
     <div class="row">
         <div class="col-6">
-            <div class="d-flex justify-content-start">{{ account.name }}</div> 
+            <div 
+            class="d-flex justify-content-start"
+            >{{ account.name }}</div> 
         </div>
         <div class="col-6">
-            <div class="d-flex justify-content-end">{{ account.balance }}</div> 
+            <div 
+            class="d-flex justify-content-end"
+            [ngClass]=" account.balance < 0 ? 'text-danger' : 'text-primary'"
+            >{{ account.balance }}</div> 
         </div>
     </div>
     <hr>

@@ -3,6 +3,7 @@ import { ReplaySubject, Subject, take } from 'rxjs';
 import { Transaction } from '../model/transaction.model';
 import { TransactionRepository } from '../repository/transaction.repository';
 import { DatabaseService } from './database.service';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,14 @@ export class TransactionService{
 
   constructor(
     private repository: TransactionRepository,
+    private accountService: AccountService,
     database: DatabaseService,
   ) { 
     database.initStatus$.pipe(take(1)).subscribe(()=>this.emitTransations());
   }
 
   public async saveTransaction(transaction: Transaction) {
+    await this.accountService.updateAccountBalance(transaction);
     this.repository.saveTransaction(transaction).then(() => this.emitTransations());
   }
 

@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Account } from "../model/account.model";
 import { AccountRepository } from "../repository/account.repository";
+import { Transaction } from "../model/transaction.model";
+import { TransactionType } from "../model/transaction-type.enum";
 
 @Injectable({
     providedIn: 'root'
@@ -29,5 +31,19 @@ export class AccountService{
 
     public getAccounts(){
         return this.accountRepository.getAllAccounts();
+    }
+
+    public async updateAccountBalance(transaction: Transaction){
+        switch(transaction.transactionType){
+            case TransactionType.CREDIT: 
+                await this.accountRepository.updateAccountBalance(transaction.accountId, transaction.amount);
+                break;
+            case TransactionType.DEBIT:
+                await this.accountRepository.updateAccountBalance(transaction.accountId, -transaction.amount);
+                break;
+            case TransactionType.TRANSFER:
+                await this.accountRepository.updateAccountBalance(transaction.accountId, -transaction.amount);
+                await this.accountRepository.updateAccountBalance(transaction.toAccountId, transaction.amount);
+        }
     }
 }

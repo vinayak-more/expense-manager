@@ -21,3 +21,9 @@ WHERE id = ?
 `
 
 export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A`
+
+export const SELECT_ACCOUNT_BY_ID = ` 
+SELECT *, A.accountName as name  FROM ACCOUNT A 
+WHERE id = ?`
+
+export const UPDATE_ACCOUNT_BALANCE = ` UPDATE ACCOUNT SET balance = ? where id = ?`;

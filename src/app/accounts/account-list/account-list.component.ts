@@ -3,11 +3,13 @@ import { AccountService } from '../../service/account.service';
 import { Account } from '../../model/account.model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-account-list',
   standalone: true,
   imports: [
+    NgClass,
     MatGridListModule,
     MatDividerModule,
   ],
