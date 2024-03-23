@@ -5,10 +5,10 @@ import { ManageComponent } from './manage/manage.component';
 import { AccountsComponent } from './accounts/accounts.component';
 
 export const routes: Routes = [
-    { path: '', component: TransactionsComponent},
+    { path: '', redirectTo:'transactions', pathMatch: "full"},
     { path: 'transactions', component: TransactionsComponent},
     { path: 'transactions/new', component: TransactionEditComponent},
     { path: 'transactions/edit/:id', component: TransactionEditComponent},
     { path: 'manage', component: ManageComponent},
-    { path: 'manage/accounts', component: AccountsComponent},
+    { path: 'accounts', component: AccountsComponent},
 ];

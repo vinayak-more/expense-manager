@@ -1,8 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { ReplaySubject, Subject, take } from 'rxjs';
 import { Transaction } from '../model/transaction.model';
-import { ReplaySubject, Subject, map, take } from 'rxjs';
-import { DatabaseService } from './database.service';
 import { TransactionRepository } from '../repository/transaction.repository';
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'

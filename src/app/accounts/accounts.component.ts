@@ -23,6 +23,6 @@ export class AccountsComponent {
   ){}
 
   onBack(){
-    this.router.navigate(['manage']);
+    this.router.navigate(['']);
   }
 }
