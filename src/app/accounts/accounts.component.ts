@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
+import { AccountListComponent } from './account-list/account-list.component';
 
 @Component({
   selector: 'app-accounts',
@@ -10,8 +11,11 @@ import { Router, RouterLink } from '@angular/router';
   imports: [
     CommonModule,
     RouterLink,
+
     MatIconModule,
     MatButtonModule,
+
+    AccountListComponent,
   ],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss'
