@@ -33,6 +33,8 @@ SET dateStr = ?, transactionType = ?, accountId = ?, categoryId = ?, toAccountId
 WHERE id = ?
 `
 
+export const DELETE_TRANSACTION = `DELETE FROM TXN WHERE id = ?;`
+
 export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A`
 
 export const SELECT_ACCOUNT_BY_ID = ` 

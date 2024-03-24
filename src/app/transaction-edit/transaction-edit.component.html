@@ -1,9 +1,16 @@
 <div class="container-fluid">
-    <div>
-        <button mat-icon-button (click)="onBack()">
+    <div class="row">
+        <button class="col-1" mat-icon-button (click)="onBack()">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <span style="vertical-align: super;"><h2 style="display: inline-block;">{{ header }}</h2></span>
+        <div class="col-8 mt-auto mb-auto">
+            <h2 class="m-0">{{ header }}</h2>
+        </div>
+        <div class="col-2" *ngIf="editMode">
+            <button mat-icon-button (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
     </div>
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <input *ngIf="false" type="number" formControlName="id">

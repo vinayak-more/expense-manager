@@ -18,6 +18,7 @@ import { AccountService } from '../service/account.service';
 import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category.model';
 import { NgIf } from '@angular/common';
+import { accounts } from '../data/accounts';
 
 @Component({
   selector: 'app-transaction-edit',
@@ -40,7 +41,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './transaction-edit.component.scss'
 })
 export class TransactionEditComponent implements OnInit {
-  accounts: Account[];
+  accounts: Account[] = accounts;
   categories: Category[];
   editMode: boolean = false;
   header:string = 'Expense';
@@ -152,6 +153,11 @@ export class TransactionEditComponent implements OnInit {
       case TransactionType.DEBIT: this.header = "Expense"; return;
       case TransactionType.TRANSFER: this.header = "Transfer"; return;
     }
+  }
+
+  async onDelete(){
+    await this.transactionService.deleteTransaction(this.formGroup.value.id);
+    this.onBack();
   }
 
 }

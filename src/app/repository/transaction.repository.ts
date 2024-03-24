@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Transaction } from "../model/transaction.model";
-import { INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR, SELECT_TRANSACTION_BY_ID, UPDATE_TRANSACTION } from "./queries";
+import { DELETE_TRANSACTION, INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR, SELECT_TRANSACTION_BY_ID, UPDATE_TRANSACTION } from "./queries";
 
 @Injectable({
     providedIn: 'root'
@@ -60,4 +60,13 @@ export class TransactionRepository {
         })
         return transaction.values[0];
     }
+
+    deleteTransaction(id: number) {
+        return this.databaseService.executeQuery(db => {
+            return db.executeTransaction([{
+                statement: DELETE_TRANSACTION,
+                values:[id]
+            }])
+        });
+      }
 }

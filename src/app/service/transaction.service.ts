@@ -70,4 +70,10 @@ export class TransactionService{
   public async getTransactions():Promise<Transaction[]>{
     return this.repository.getTransactionsByMonthYear(this.getSelectedMonthYear());
   }
+
+  public async deleteTransaction(id: number) {
+    const transactionEntity = await this.repository.getTransactionById(id);
+    await this.accountService.deleteTransaction(transactionEntity);
+    this.repository.deleteTransaction(id).then(() => this.emitTransations());;
+  }
 }

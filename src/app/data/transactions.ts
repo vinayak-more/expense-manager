@@ -3,6 +3,7 @@ import { Transaction } from "../model/transaction.model";
 
 export const transactions: Transaction[] = [
     {
+        id: 1,
         transactionType: TransactionType.DEBIT,
         date: new Date(),
         accountId: 1,
