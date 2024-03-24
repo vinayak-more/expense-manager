@@ -43,6 +43,7 @@ export class TransactionEditComponent implements OnInit {
   accounts: Account[];
   categories: Category[];
   editMode: boolean = false;
+  header:string = 'Expense';
 
   formGroup = new FormGroup<TransactionForm>({
     id: new FormControl(new Date().getTime()),
@@ -95,6 +96,7 @@ export class TransactionEditComponent implements OnInit {
         this.formGroup.controls.categoryId.reset();
       else this.formGroup.addControl('categoryId', new FormControl(null, Validators.required));
     }
+    this.updateHeader(type);
   }
 
 
@@ -142,6 +144,14 @@ export class TransactionEditComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['transactions'])
+  }
+
+  updateHeader(type: TransactionType){
+    switch(type){
+      case TransactionType.CREDIT: this.header = "Income"; return;
+      case TransactionType.DEBIT: this.header = "Expense"; return;
+      case TransactionType.TRANSFER: this.header = "Transfer"; return;
+    }
   }
 
 }
