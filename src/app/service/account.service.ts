@@ -46,4 +46,8 @@ export class AccountService{
                 await this.accountRepository.updateAccountBalance(transaction.toAccountId, transaction.amount);
         }
     }
+
+    public async saveAccount(account: Account){
+        return this.accountRepository.saveAccount(account);
+    }
 }

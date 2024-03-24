@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <a mat-icon-button [routerLink]="['../']">
+                <mat-icon>arrow_back</mat-icon>
+            </a>
+            <span style="vertical-align: super;">
+                <h2 style="display: inline-block;">Add Account</h2>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col-12" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+            <mat-form-field class="col-12">
+                <mat-label>Account Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="col-12">
+                <mat-label>Initial Balance</mat-label>
+                <input matInput type="number" formControlName="balance">
+            </mat-form-field>
+            <button class="col-6" [disabled]="formGroup.invalid" mat-raised-button color="primary" type="submit">
+                Save</button>
+            <a class="col-6" mat-raised-button color="accent" [routerLink]="['../']">Cancel</a>
+        </form>
+    </div>
+</div>

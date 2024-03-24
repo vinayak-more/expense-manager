@@ -27,3 +27,14 @@ SELECT *, A.accountName as name  FROM ACCOUNT A
 WHERE id = ?`
 
 export const UPDATE_ACCOUNT_BALANCE = ` UPDATE ACCOUNT SET balance = ? where id = ?`;
+
+export const INSERT_ACCOUNT = ` 
+INSERT INTO ACCOUNT ( accountName, balance )
+VALUES (?, ?);
+`
+
+export const UPDATE_ACCOUNT = `
+UPDATE ACCOUNT 
+SET name = ?, balance = ?
+WHERE id = ? ;
+`

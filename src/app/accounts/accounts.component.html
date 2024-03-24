@@ -13,10 +13,10 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <a mat-menu-item [routerLink]="['new']">
                     <mat-icon>add</mat-icon>
                     <span>Add</span>
-                </button>
+                </a>
                 <button mat-menu-item>
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>

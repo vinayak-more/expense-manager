@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Account } from "../model/account.model";
-import { SELECT_ACCOUNTS, SELECT_ACCOUNT_BY_ID, UPDATE_ACCOUNT_BALANCE} from './queries'
+import { INSERT_ACCOUNT, SELECT_ACCOUNTS, SELECT_ACCOUNT_BY_ID, UPDATE_ACCOUNT, UPDATE_ACCOUNT_BALANCE} from './queries'
 
 @Injectable({
     providedIn: 'root'
@@ -28,5 +28,23 @@ export class AccountRepository{
                 values:[account.balance + balance, id]
             }])
         });
+    }
+
+    public async saveAccount(account: Account){
+        if(account.id == 0){
+            return this.databaseService.executeQuery(db => {
+                return db.executeTransaction([{
+                    statement: INSERT_ACCOUNT,
+                    values:[account.name, account.balance]
+                }])
+            });
+        } else {
+            return this.databaseService.executeQuery(db => {
+                return db.executeTransaction([{
+                    statement: UPDATE_ACCOUNT,
+                    values: [account.name, account.balance, account.id]
+                }])
+            });
+        }
     }
 }
