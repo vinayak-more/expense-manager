@@ -12,7 +12,7 @@
             <div 
             class="d-flex justify-content-end"
             [ngClass]=" account.balance < 0 ? 'text-danger' : 'text-primary'"
-            >{{ account.balance }}</div> 
+            >{{ account.balance | currency : 'INR'}}</div> 
         </div>
     </div>
     <hr>

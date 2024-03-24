@@ -2,11 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Transaction } from '../../model/transaction.model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TransactionType } from '../../model/transaction-type.enum';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-item-summary',
   standalone: true,
-  imports: [ MatGridListModule],
+  imports: [ MatGridListModule, CurrencyPipe],
   templateUrl: './transaction-item-summary.component.html',
   styleUrl: './transaction-item-summary.component.scss'
 })

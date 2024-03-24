@@ -3,7 +3,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionType } from '../../model/transaction-type.enum';
-import { NgClass } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { Subscription, map } from 'rxjs';
 import { Transaction } from '../../model/transaction.model';
 
@@ -13,8 +13,10 @@ import { Transaction } from '../../model/transaction.model';
   standalone: true,
   imports: [
     NgClass,
+    CurrencyPipe,
     MatGridListModule, 
-    MatDividerModule],
+    MatDividerModule,
+  ],
   templateUrl: './transaction-summary.component.html',
   styleUrl: './transaction-summary.component.scss'
 })

@@ -2,19 +2,19 @@
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div>Income</div>
-            <div class="text-primary">{{ credits }}</div>
+            <div class="text-primary">{{ credits | currency : 'INR'}}</div>
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div>Expenses</div>
-            <div class="text-danger">{{ debits }}</div>
+            <div class="text-danger">{{ debits | currency : 'INR'}}</div>
         </div>
     </mat-grid-tile>
     <mat-grid-tile>
         <div class="d-flex flex-column align-items-center">
             <div>Total</div>
-            <div [ngClass]="{'text-primary': total >= 0, 'text-danger': total < 0}">{{ total }}</div>
+            <div [ngClass]="{'text-primary': total >= 0, 'text-danger': total < 0}">{{ total | currency : 'INR'}}</div>
         </div>
     </mat-grid-tile>
 </mat-grid-list>

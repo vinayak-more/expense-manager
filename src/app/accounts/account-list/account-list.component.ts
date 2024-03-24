@@ -3,7 +3,7 @@ import { AccountService } from '../../service/account.service';
 import { Account } from '../../model/account.model';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
-import { NgClass } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { accounts } from '../../data/accounts';
 
 @Component({
@@ -11,6 +11,8 @@ import { accounts } from '../../data/accounts';
   standalone: true,
   imports: [
     NgClass,
+    CurrencyPipe,
+    
     MatGridListModule,
     MatDividerModule,
   ],

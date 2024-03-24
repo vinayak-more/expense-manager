@@ -28,7 +28,7 @@
                 <mat-grid-tile>
                     <div
                         [ngClass]="{'text-danger': transaction.transactionType === transactionType.DEBIT , 'text-primary': transaction.transactionType === transactionType.CREDIT}">
-                        {{transaction.amount}}</div>
+                        {{transaction.amount | currency : 'INR'}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
             </mat-grid-list>
