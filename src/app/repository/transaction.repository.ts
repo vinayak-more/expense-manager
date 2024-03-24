@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Transaction } from "../model/transaction.model";
-import { INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR, UPDATE_TRANSACTION } from "./queries";
+import { INSERT_TRANSACTION, SELECT_TRANSACTIONS_BY_MONTHYEAR, SELECT_TRANSACTION_BY_ID, UPDATE_TRANSACTION } from "./queries";
 
 @Injectable({
     providedIn: 'root'
@@ -52,5 +52,12 @@ export class TransactionRepository {
                 ]
             }])
         });
+    }
+
+    public async getTransactionById(id: number): Promise<Transaction>{
+        const transaction = await this.databaseService.executeQuery( db => {
+            return db.query(SELECT_TRANSACTION_BY_ID, [id]);
+        })
+        return transaction.values[0];
     }
 }

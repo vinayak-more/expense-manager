@@ -50,4 +50,9 @@ export class AccountService{
     public async saveAccount(account: Account){
         return this.accountRepository.saveAccount(account);
     }
+
+    public async deleteTransaction(transaction: Transaction){
+        transaction.amount = -transaction.amount;
+        return this.updateAccountBalance(transaction);
+    }
 }

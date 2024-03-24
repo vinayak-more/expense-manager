@@ -9,6 +9,19 @@ JOIN ACCOUNT A ON T.accountId = A.Id
 LEFT JOIN CATEGORY C ON T.categoryId = C.Id
 WHERE monthYear = ?
 `
+
+export const SELECT_TRANSACTION_BY_ID = ` 
+SELECT 
+T.*, 
+A.accountName, 
+A.accountName as toName,
+C.categoryName
+FROM TXN T 
+JOIN ACCOUNT A ON T.accountId = A.Id 
+LEFT JOIN CATEGORY C ON T.categoryId = C.Id
+WHERE T.id = ?
+`
+
 export const INSERT_TRANSACTION = `
 INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)

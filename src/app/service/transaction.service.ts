@@ -28,6 +28,9 @@ export class TransactionService{
   }
 
   public async updateTransaction(transaction: Transaction){
+    const transactionEntity = await this.repository.getTransactionById(transaction.id);
+    await this.accountService.deleteTransaction(transactionEntity);
+    await this.accountService.updateAccountBalance(transaction);
     this.repository.updateTransaction(transaction).then(() => this.emitTransations());
   }
 
