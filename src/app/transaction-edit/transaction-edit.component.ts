@@ -19,6 +19,7 @@ import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category.model';
 import { NgIf } from '@angular/common';
 import { accounts } from '../data/accounts';
+import { categories } from '../data/categories';
 
 @Component({
   selector: 'app-transaction-edit',
@@ -42,9 +43,11 @@ import { accounts } from '../data/accounts';
 })
 export class TransactionEditComponent implements OnInit {
   accounts: Account[] = accounts;
+  categoryMaster : Category[] = categories;
   categories: Category[];
   editMode: boolean = false;
   header:string = 'Expense';
+  transaction:Transaction;
 
   formGroup = new FormGroup<TransactionForm>({
     id: new FormControl(new Date().getTime()),
@@ -63,28 +66,31 @@ export class TransactionEditComponent implements OnInit {
     private accountService: AccountService,
     private categoryService: CategoryService,
   ) {
-
     let transaction = null;
     if (this.router.getCurrentNavigation()?.extras?.state) {
       transaction = <Transaction>this.router.getCurrentNavigation()?.extras?.state['transaction'];
-      transaction = { ...transaction, 'date': this.stringToDate(transaction.dateStr) };
-    }
-    if (transaction) {
-      this.editMode = true;
-      this.onTransactionTypeChange(transaction.transactionType);
-      this.formGroup.patchValue(transaction);
-    } else {
-      this.editMode = false;
+      this.transaction = { ...transaction, 'date': this.stringToDate(transaction.dateStr) };
     }
   }
 
   ngOnInit(): void {
-    this.accountService.getAccounts().then(accounts => this.accounts = accounts);
-    this.categories = this.categoryService.getCategories().filter(category => category.transactionType === this.formGroup.value.transactionType);
+    Promise.all([
+      this.accountService.getAccounts(), 
+      this.categoryService.getCategories()])
+      .then((value: [Account[], Category[]]) =>{
+      this.accounts = value[0];
+      this.categoryMaster = value[1];
+      this.categories = this.categoryMaster.filter(category => category.transactionType === this.formGroup.value.transactionType);
+    });
+    if (this.transaction) {
+      this.editMode = true;
+      this.onTransactionTypeChange(this.transaction.transactionType);
+      this.formGroup.patchValue(this.transaction);
+    } else {
+      this.editMode = false;
+    }
     this.formGroup.controls.transactionType.valueChanges.subscribe(value => this.onTransactionTypeChange(value));
   }
-
-
 
   onTransactionTypeChange(type: TransactionType) {
     if (type === TransactionType.TRANSFER) {
@@ -92,7 +98,7 @@ export class TransactionEditComponent implements OnInit {
       this.formGroup.addControl('toAccountId', new FormControl(null, Validators.required));
     } else {
       this.formGroup.removeControl('toAccountId');
-      this.categories = this.categoryService.getCategories().filter(category => category.transactionType === type);
+      this.categories = this.categoryMaster.filter(category => category.transactionType === type);
       if (this.formGroup.contains('categoryId'))
         this.formGroup.controls.categoryId.reset();
       else this.formGroup.addControl('categoryId', new FormControl(null, Validators.required));

@@ -3,7 +3,7 @@ SELECT
 T.*, 
 A.accountName, 
 A.accountName as toName,
-C.categoryName
+C.name as categoryName
 FROM TXN T 
 JOIN ACCOUNT A ON T.accountId = A.Id 
 LEFT JOIN CATEGORY C ON T.categoryId = C.Id
@@ -15,7 +15,7 @@ SELECT
 T.*, 
 A.accountName, 
 A.accountName as toName,
-C.categoryName
+C.name as categoryName
 FROM TXN T 
 JOIN ACCOUNT A ON T.accountId = A.Id 
 LEFT JOIN CATEGORY C ON T.categoryId = C.Id
@@ -53,3 +53,5 @@ UPDATE ACCOUNT
 SET name = ?, balance = ?
 WHERE id = ? ;
 `
+
+export const SELECT_ALL_CAGETORIES = ` SELECT * FROM CATEGORY`;

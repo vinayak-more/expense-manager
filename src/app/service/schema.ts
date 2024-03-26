@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS ACCOUNT(
 
 CREATE TABLE IF NOT EXISTS CATEGORY (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    categoryName TEXT DEFAULT NULL,
+    name TEXT DEFAULT NULL,
     transactionType TEXT DEFAULT NULL,
     isDeleted INTEGER DEFAULT 0
 );
@@ -34,18 +34,18 @@ VALUES (2, 'Credit Card', 0, 0);
 INSERT OR IGNORE INTO ACCOUNT (id, accountName, balance, isDeleted)
 VALUES (3, 'Cash', 0, 0);
 
-INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+INSERT OR IGNORE INTO CATEGORY (id, name, transactionType)
 VALUES (1, 'Food', 'DEBIT');
 
-INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+INSERT OR IGNORE INTO CATEGORY (id, name, transactionType)
 VALUES (2, 'Transport', 'DEBIT');
 
-INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
-VALUES (3, 'Medicine', 'DEBIT');
+INSERT OR IGNORE INTO CATEGORY (id, name, transactionType)
+VALUES (3, 'Health', 'DEBIT');
 
-INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+INSERT OR IGNORE INTO CATEGORY (id, name, transactionType)
 VALUES (4, 'Salary', 'CREDIT');
 
-INSERT OR IGNORE INTO CATEGORY (id, categoryName, transactionType)
+INSERT OR IGNORE INTO CATEGORY (id, name, transactionType)
 VALUES (5, 'Refund', 'CREDIT');
 `
