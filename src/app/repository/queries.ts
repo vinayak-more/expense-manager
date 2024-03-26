@@ -35,7 +35,7 @@ WHERE id = ?
 
 export const DELETE_TRANSACTION = `DELETE FROM TXN WHERE id = ?;`
 
-export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A`
+export const SELECT_ACCOUNTS = ` SELECT *, A.accountName as name  FROM ACCOUNT A WHERE isDeleted = 0`
 
 export const SELECT_ACCOUNT_BY_ID = ` 
 SELECT *, A.accountName as name  FROM ACCOUNT A 
@@ -51,6 +51,12 @@ VALUES (?, ?);
 export const UPDATE_ACCOUNT = `
 UPDATE ACCOUNT 
 SET name = ?, balance = ?
+WHERE id = ? ;
+`
+
+export const DELETE_ACCOUNT = `
+UPDATE ACCOUNT
+SET isDeleted = 1
 WHERE id = ? ;
 `
 

@@ -55,4 +55,12 @@ export class AccountService{
         transaction.amount = -transaction.amount;
         return this.updateAccountBalance(transaction);
     }
+
+    public async getAccountById(id: number):Promise<Account>{
+        return this.accountRepository.getAccount(id);
+    }
+
+    public async deleteAccount(id: number){
+        return this.accountRepository.delete(id);
+    }
 }

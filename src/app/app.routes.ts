@@ -15,6 +15,7 @@ export const routes: Routes = [
     { path: 'manage', component: ManageComponent },
     { path: 'accounts', component: AccountsComponent },
     { path: 'accounts/new', component: AccountFormComponent },
+    { path: 'accounts/:id', component: AccountFormComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'category/new', component: CategoryFormComponent },
     { path: 'category/:id', component: CategoryFormComponent },

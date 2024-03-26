@@ -5,6 +5,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { accounts } from '../../data/accounts';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-account-list',
@@ -12,6 +13,7 @@ import { accounts } from '../../data/accounts';
   imports: [
     NgClass,
     CurrencyPipe,
+    RouterLink,
     
     MatGridListModule,
     MatDividerModule,

@@ -2,7 +2,7 @@
 <hr>
 
 @for (account of accounts; track account.id) {
-    <div class="row">
+    <div class="row" [routerLink]="[account.id]">
         <div class="col-6">
             <div 
             class="d-flex justify-content-start"

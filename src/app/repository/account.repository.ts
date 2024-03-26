@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Account } from "../model/account.model";
-import { INSERT_ACCOUNT, SELECT_ACCOUNTS, SELECT_ACCOUNT_BY_ID, UPDATE_ACCOUNT, UPDATE_ACCOUNT_BALANCE} from './queries'
+import { DELETE_ACCOUNT, INSERT_ACCOUNT, SELECT_ACCOUNTS, SELECT_ACCOUNT_BY_ID, UPDATE_ACCOUNT, UPDATE_ACCOUNT_BALANCE} from './queries'
 
 @Injectable({
     providedIn: 'root'
@@ -46,5 +46,14 @@ export class AccountRepository{
                 }])
             });
         }
+    }
+
+    public async delete(id: number){
+        return this.databaseService.executeQuery(db => {
+            return db.executeTransaction([{
+                statement: DELETE_ACCOUNT,
+                values:[id]
+            }])
+        })
     }
 }
