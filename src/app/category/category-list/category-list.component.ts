@@ -3,6 +3,7 @@ import { Category } from '../../model/category.model';
 import { categories } from '../../data/categories';
 import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TransactionType } from '../../model/transaction-type.enum';
+import { CategoryService } from '../../service/category.service';
 
 @Component({
   selector: 'app-category-list',
@@ -18,7 +19,13 @@ export class CategoryListComponent implements OnInit{
   categories:Category[] = categories;
   selectedType = TransactionType.CREDIT;
 
+  constructor(private categoryService: CategoryService){}
+
   ngOnInit(): void {
+    this.categoryService.getCategories().then( values => {
+      this.categoryMaster = values;
+      this.updateCategoryList();
+    })
     this.updateCategoryList();
   }
 

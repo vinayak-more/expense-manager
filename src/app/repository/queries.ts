@@ -55,3 +55,14 @@ WHERE id = ? ;
 `
 
 export const SELECT_ALL_CAGETORIES = ` SELECT * FROM CATEGORY`;
+
+export const INSERT_CATEGORY = ` 
+INSERT INTO CATEGORY (name, transactionType)
+VALUES (?, ?);
+`
+
+export const UPDATE_CATEGORY = `
+UPDATE CATEGORY 
+SET name = ?, transactionType = ?
+WHERE id = ? ;
+`

@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10">
+            <a mat-icon-button [routerLink]="['../']">
+                <mat-icon>arrow_back</mat-icon>
+            </a>
+            <span style="vertical-align: super;">
+                <h2 style="display: inline-block;">Add Category</h2>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col-12" (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+            <mat-form-field class="col-12">
+                <mat-label>Category Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field class="col-12">
+                <mat-label>Category Type</mat-label>
+                <mat-select formControlName='transactionType'>
+                    <mat-option value="CREDIT">Income</mat-option>
+                    <mat-option value="DEBIT">Expense</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button class="col-6" [disabled]="formGroup.invalid" mat-raised-button color="primary" type="submit">
+                Save</button>
+            <a class="col-6" mat-raised-button color="accent" [routerLink]="['../']">Cancel</a>
+        </form>
+    </div>
+</div>

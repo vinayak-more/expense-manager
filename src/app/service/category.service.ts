@@ -14,4 +14,8 @@ export class CategoryService{
     public getCategories(){
         return this.repository.getAllCategories();
     }
+
+    public saveCategory(category: Category){
+        return this.repository.save(category);
+    }
 }
