@@ -7,11 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../service/category.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-category-form',
   standalone: true,
   imports: [
+    NgIf,
     RouterLink,
     ReactiveFormsModule,
 
@@ -31,6 +33,7 @@ export class CategoryFormComponent implements OnInit{
     name: new FormControl(null, Validators.required),
     transactionType: new FormControl(null, Validators.required)
   });
+  editMode = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +44,7 @@ export class CategoryFormComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params: Params)=>{
       if(params['id']){
+        this.editMode = true;
         this.categoryService.getCategoryById(+params['id'])
         .then(category => this.formGroup.patchValue(category));
       }
@@ -49,6 +53,12 @@ export class CategoryFormComponent implements OnInit{
 
   onSubmit(){
     this.categoryService.saveCategory(this.formGroup.getRawValue())
+    .then(() => this.router.navigate(['../'],{relativeTo: this.route}));
+  }
+
+  onDelete(){
+    console.log("On Delete", this.formGroup.value.id);
+    this.categoryService.deleteCategory(this.formGroup.value.id)
     .then(() => this.router.navigate(['../'],{relativeTo: this.route}));
   }
 }

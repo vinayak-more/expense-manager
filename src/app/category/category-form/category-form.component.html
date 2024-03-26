@@ -5,8 +5,14 @@
                 <mat-icon>arrow_back</mat-icon>
             </a>
             <span style="vertical-align: super;">
-                <h2 style="display: inline-block;">Add Category</h2>
+                <h2 style="display: inline-block;" *ngIf="!editMode">Add Category</h2>
+                <h2 style="display: inline-block;" *ngIf="editMode">Update Category</h2>
             </span>
+        </div>
+        <div class="col-2" *ngIf="editMode">
+            <button mat-icon-button (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+            </button>
         </div>
     </div>
     <div class="row">

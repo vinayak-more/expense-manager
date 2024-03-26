@@ -54,7 +54,7 @@ SET name = ?, balance = ?
 WHERE id = ? ;
 `
 
-export const SELECT_ALL_CAGETORIES = ` SELECT * FROM CATEGORY`;
+export const SELECT_ALL_CAGETORIES = ` SELECT * FROM CATEGORY WHERE isDeleted = 0`;
 
 export const SELECT_CATEGORY_BY_ID = ` SELECT * FROM CATEGORY WHERE id = ?`
 
@@ -66,5 +66,10 @@ VALUES (?, ?);
 export const UPDATE_CATEGORY = `
 UPDATE CATEGORY 
 SET name = ?, transactionType = ?
+WHERE id = ? ;
+`
+export const DELETE_CATEGORY = `
+UPDATE CATEGORY 
+SET isDeleted = 1
 WHERE id = ? ;
 `

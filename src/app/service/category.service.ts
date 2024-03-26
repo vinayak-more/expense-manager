@@ -22,4 +22,9 @@ export class CategoryService{
     public saveCategory(category: Category){
         return this.repository.save(category);
     }
+
+    public deleteCategory(id: number) {
+        return this.repository.delete(id);
+    }
+  
 }

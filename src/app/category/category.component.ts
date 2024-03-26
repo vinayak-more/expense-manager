@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { CategoryListComponent } from './category-list/category-list.component';
 
@@ -13,7 +12,6 @@ import { CategoryListComponent } from './category-list/category-list.component';
     
     RouterLink,
     MatIconModule,
-    MatMenuModule,
     MatButtonModule,
   ],
   templateUrl: './category.component.html',

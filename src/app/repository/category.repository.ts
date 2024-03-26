@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DatabaseService } from "../service/database.service";
 import { Category } from "../model/category.model";
-import { INSERT_CATEGORY, SELECT_ALL_CAGETORIES, SELECT_CATEGORY_BY_ID, UPDATE_CATEGORY } from "./queries";
+import { DELETE_CATEGORY, INSERT_CATEGORY, SELECT_ALL_CAGETORIES, SELECT_CATEGORY_BY_ID, UPDATE_CATEGORY } from "./queries";
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +40,14 @@ export class CategoryRepository{
             return db.query(SELECT_CATEGORY_BY_ID, [id]);
         })
         return category.values[0];
+    }
+
+    public async delete(id: number){
+        return this.databaseService.executeQuery(db => {
+            return db.executeTransaction([{
+                statement: DELETE_CATEGORY,
+                values: [id]
+            }])
+        });
     }
 }
