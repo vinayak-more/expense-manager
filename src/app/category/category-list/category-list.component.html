@@ -1,0 +1,15 @@
+<h2>Categories</h2>
+<hr>
+<mat-button-toggle-group class="col-12" (change)="onChange($event)">
+    <mat-button-toggle class="col-6" value="CREDIT" checked="true">Income</mat-button-toggle>
+    <mat-button-toggle class="col-6" value="DEBIT">Expense</mat-button-toggle>
+</mat-button-toggle-group>
+<hr>
+@for (category of categories; track category.id) {
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-start">{{ category.name }}</div>
+    </div>
+</div>
+<hr>
+}
