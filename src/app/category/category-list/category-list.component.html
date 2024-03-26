@@ -5,11 +5,11 @@
     <mat-button-toggle class="col-6" value="DEBIT">Expense</mat-button-toggle>
 </mat-button-toggle-group>
 <hr>
-@for (category of categories; track category.id) {
-<div class="row">
-    <div class="col-12">
-        <div class="d-flex justify-content-start">{{ category.name }}</div>
+<div class="row" class="category-list-container">
+    @for (category of categories; track category.id) {
+    <div class="col-12" [routerLink]="[category.id]">
+        {{ category.name }}
     </div>
+    <hr>
+    }
 </div>
-<hr>
-}

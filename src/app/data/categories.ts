@@ -27,4 +27,68 @@ export const categories  : Category[] = [
         name: 'Refund',
         transactionType: TransactionType.CREDIT
     },
+    ,
+    {
+        id: 3,
+        name: 'Medicine',
+        transactionType: TransactionType.DEBIT
+    },
+    {
+        id: 4,
+        name: 'Salary',
+        transactionType: TransactionType.CREDIT
+    },
+    {
+        id: 5,
+        name: 'Refund',
+        transactionType: TransactionType.CREDIT
+    },
+    ,
+    {
+        id: 3,
+        name: 'Medicine',
+        transactionType: TransactionType.DEBIT
+    },
+    {
+        id: 4,
+        name: 'Salary',
+        transactionType: TransactionType.CREDIT
+    },
+    {
+        id: 5,
+        name: 'Refund',
+        transactionType: TransactionType.CREDIT
+    },
+    ,
+    {
+        id: 3,
+        name: 'Medicine',
+        transactionType: TransactionType.DEBIT
+    },
+    {
+        id: 4,
+        name: 'Salary',
+        transactionType: TransactionType.CREDIT
+    },
+    {
+        id: 5,
+        name: 'Refund',
+        transactionType: TransactionType.CREDIT
+    },
+    ,
+    {
+        id: 3,
+        name: 'Medicine',
+        transactionType: TransactionType.DEBIT
+    },
+    {
+        id: 4,
+        name: 'Salary',
+        transactionType: TransactionType.CREDIT
+    },
+    {
+        id: 5,
+        name: 'Refund',
+        transactionType: TransactionType.CREDIT
+    },
 ]

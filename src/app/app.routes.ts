@@ -17,4 +17,6 @@ export const routes: Routes = [
     { path: 'accounts/new', component: AccountFormComponent },
     { path: 'category', component: CategoryComponent },
     { path: 'category/new', component: CategoryFormComponent },
+    { path: 'category/:id', component: CategoryFormComponent },
+
 ];

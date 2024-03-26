@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../service/category.service';
 
 @Component({
@@ -24,7 +24,7 @@ import { CategoryService } from '../../service/category.service';
   templateUrl: './category-form.component.html',
   styleUrl: './category-form.component.scss'
 })
-export class CategoryFormComponent {
+export class CategoryFormComponent implements OnInit{
   
   formGroup = new FormGroup<CategoryForm>({
     id: new FormControl(0),
@@ -32,11 +32,24 @@ export class CategoryFormComponent {
     transactionType: new FormControl(null, Validators.required)
   });
 
-  constructor(private categoryService: CategoryService){}
+  constructor(
+    private route: ActivatedRoute,
+    private router : Router,
+    private categoryService: CategoryService
+    ){}
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params: Params)=>{
+      if(params['id']){
+        this.categoryService.getCategoryById(+params['id'])
+        .then(category => this.formGroup.patchValue(category));
+      }
+    });
+  }
 
   onSubmit(){
-    console.log(this.formGroup.value);
     this.categoryService.saveCategory(this.formGroup.getRawValue())
+    .then(() => this.router.navigate(['../'],{relativeTo: this.route}));
   }
 }
 

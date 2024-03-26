@@ -56,6 +56,8 @@ WHERE id = ? ;
 
 export const SELECT_ALL_CAGETORIES = ` SELECT * FROM CATEGORY`;
 
+export const SELECT_CATEGORY_BY_ID = ` SELECT * FROM CATEGORY WHERE id = ?`
+
 export const INSERT_CATEGORY = ` 
 INSERT INTO CATEGORY (name, transactionType)
 VALUES (?, ?);

@@ -4,12 +4,16 @@ import { categories } from '../../data/categories';
 import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TransactionType } from '../../model/transaction-type.enum';
 import { CategoryService } from '../../service/category.service';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
   imports: [
+    RouterLink,
     MatButtonToggleModule,
+    MatButtonModule,
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'

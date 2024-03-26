@@ -11,6 +11,10 @@ export class CategoryService{
 
     constructor(private repository: CategoryRepository){}
 
+    public getCategoryById(id: number){
+        return this.repository.getById(id);
+    }
+
     public getCategories(){
         return this.repository.getAllCategories();
     }
