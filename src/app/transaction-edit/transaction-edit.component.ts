@@ -20,6 +20,8 @@ import { Category } from '../model/category.model';
 import { NgIf } from '@angular/common';
 import { accounts } from '../data/accounts';
 import { categories } from '../data/categories';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-transaction-edit',
@@ -27,7 +29,7 @@ import { categories } from '../data/categories';
   imports: [
     NgIf,
     ReactiveFormsModule,
-
+    ConfirmDialogComponent,
     MatIconModule,
     MatButtonModule,
     MatSelectModule,
@@ -65,6 +67,7 @@ export class TransactionEditComponent implements OnInit {
     private transactionService: TransactionService,
     private accountService: AccountService,
     private categoryService: CategoryService,
+    private dialog: MatDialog,
   ) {
     let transaction = null;
     if (this.router.getCurrentNavigation()?.extras?.state) {
@@ -161,9 +164,16 @@ export class TransactionEditComponent implements OnInit {
     }
   }
 
-  async onDelete(){
-    await this.transactionService.deleteTransaction(this.formGroup.value.id);
-    this.onBack();
+  async onDelete() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: "Are you Sure?", body: `Are you sure you want to delete this Transaction?` }
+    });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.transactionService.deleteTransaction(this.formGroup.value.id)
+          .then(() => this.onBack());
+      }
+    });
   }
 
 }
