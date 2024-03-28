@@ -29,7 +29,8 @@ export class TransactionRepository {
                     transaction.toAccountId || null,
                     transaction.amount,
                     transaction.note || '',
-                    transaction.monthYear
+                    transaction.monthYear,
+                    transaction.date?.getTime()
                 ]
             }])
         });
@@ -48,6 +49,7 @@ export class TransactionRepository {
                     transaction.amount,
                     transaction.note || '',
                     transaction.monthYear,
+                    transaction.date?.getTime(),
                     transaction.id
                 ]
             }])

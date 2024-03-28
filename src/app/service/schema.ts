@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS TXN (
   toAccountId INTEGER DEFAULT NULL,
   amount REAL DEFAULT NULL,
   note TEXT DEFAULT NULL,
-  monthYear TEXT DEFAULT NULL
+  monthYear TEXT DEFAULT NULL,
+  numericDate INTEGER DEFAULT NULL
 );
 
 INSERT OR IGNORE INTO ACCOUNT (id, accountName, balance, isDeleted)

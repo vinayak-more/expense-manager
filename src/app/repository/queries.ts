@@ -23,13 +23,13 @@ WHERE T.id = ?
 `
 
 export const INSERT_TRANSACTION = `
-INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO TXN ( dateStr, transactionType, accountId, categoryId, toAccountId, amount, note, monthYear, numericDate)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 export const UPDATE_TRANSACTION = `
 UPDATE TXN 
-SET dateStr = ?, transactionType = ?, accountId = ?, categoryId = ?, toAccountId = ?, amount = ?, note = ?, monthYear = ?
+SET dateStr = ?, transactionType = ?, accountId = ?, categoryId = ?, toAccountId = ?, amount = ?, note = ?, monthYear = ?, numericDate = ?
 WHERE id = ?
 `
 
