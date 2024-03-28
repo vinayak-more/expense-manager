@@ -20,10 +20,19 @@
             <mat-form-field class="col-12">
                 <mat-label>Account Name</mat-label>
                 <input matInput formControlName="name">
+                @if (formGroup.controls.name.touched && formGroup.controls.name.hasError('required')) {
+                    <mat-error>Account Name is <strong>required</strong></mat-error>
+                }
             </mat-form-field>
             <mat-form-field class="col-12">
                 <mat-label>Initial Balance</mat-label>
                 <input matInput type="number" formControlName="balance" >
+                @if (formGroup.controls.balance.hasError('pattern') && !formGroup.controls.balance.hasError('required')) {
+                    <mat-error>Please enter an amount upto 2 decimals</mat-error>
+                }
+                @if (formGroup.controls.balance.touched && formGroup.controls.balance.hasError('required')) {
+                    <mat-error>Amount is <strong>required</strong></mat-error>
+                }
             </mat-form-field>
             <button class="col-6" [disabled]="formGroup.invalid" mat-raised-button color="primary" type="submit">
                 Save</button>

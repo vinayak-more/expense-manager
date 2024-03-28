@@ -20,6 +20,9 @@
             <mat-form-field class="col-12">
                 <mat-label>Category Name</mat-label>
                 <input matInput formControlName="name">
+                @if (formGroup.controls.name.touched && formGroup.controls.name.hasError('required')) {
+                    <mat-error>Category Name is <strong>required</strong></mat-error>
+                }
             </mat-form-field>
             <mat-form-field class="col-12">
                 <mat-label>Category Type</mat-label>
@@ -27,6 +30,9 @@
                     <mat-option value="CREDIT">Income</mat-option>
                     <mat-option value="DEBIT">Expense</mat-option>
                 </mat-select>
+                @if (formGroup.controls.transactionType.touched && formGroup.controls.transactionType.hasError('required')) {
+                    <mat-error>Category Type is <strong>required</strong></mat-error>
+                }
             </mat-form-field>
             <button class="col-6" [disabled]="formGroup.invalid" mat-raised-button color="primary" type="submit">
                 Save</button>
