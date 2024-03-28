@@ -31,7 +31,7 @@ export class AccountFormComponent implements OnInit {
   formGroup = new FormGroup({
     'id': new FormControl(0),
     'name': new FormControl(null, Validators.required),
-    'balance': new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]+$/)])
+    'balance': new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{0,2})?$/)])
   });
 
   editMode = false;

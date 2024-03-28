@@ -57,7 +57,7 @@ export class TransactionEditComponent implements OnInit {
     date: new FormControl(new Date(), Validators.required),
     accountId: new FormControl(null, Validators.required),
     categoryId: new FormControl(null, Validators.required),
-    amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+    amount: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{0,2})?$/)]),
     note: new FormControl(null),
   });
 
@@ -116,6 +116,7 @@ export class TransactionEditComponent implements OnInit {
       'monthYear': this.getMonthYear(this.formGroup.value.date),
       'dateStr': this.getDateToString(this.formGroup.value.date),
     };
+    console.log(transaction);
     if (this.editMode) {
       this.transactionService.updateTransaction(transaction);
     } else {
