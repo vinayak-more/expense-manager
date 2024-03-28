@@ -50,7 +50,7 @@ VALUES (?, ?);
 
 export const UPDATE_ACCOUNT = `
 UPDATE ACCOUNT 
-SET name = ?, balance = ?
+SET accountName = ?, balance = ?
 WHERE id = ? ;
 `
 
