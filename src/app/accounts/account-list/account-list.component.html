@@ -1,6 +1,6 @@
 <h2>Accounts</h2>
 <hr>
-
+<div class="account-list-container">
 @for (account of accounts; track account.id) {
     <div class="row" [routerLink]="[account.id]">
         <div class="col-6">
@@ -17,3 +17,4 @@
     </div>
     <hr>
 }
+</div>

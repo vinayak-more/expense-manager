@@ -1,4 +1,4 @@
-package com.expense.app;
+package com.vinayak.expense.app;
 
 import com.getcapacitor.BridgeActivity;
 

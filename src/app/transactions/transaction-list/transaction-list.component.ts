@@ -5,11 +5,16 @@ import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../service/transaction.service';
 import { Subscription, take } from 'rxjs';
 import { transactions } from '../../data/transactions';
+import { FooterComponent } from '../../footer/footer.component';
 
 @Component({
   selector: 'app-transaction-list',
   standalone: true,
-  imports: [CommonModule, TransactionItemComponent],
+  imports: [
+    FooterComponent,
+    CommonModule, 
+    TransactionItemComponent,
+  ],
   templateUrl: './transaction-list.component.html',
   styleUrl: './transaction-list.component.scss'
 })
