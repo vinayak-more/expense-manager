@@ -79,3 +79,7 @@ UPDATE CATEGORY
 SET isDeleted = 1
 WHERE id = ? ;
 `
+
+export const SELECT_DB_CHANGELOG_VERSION = ` SELECT max(version) as version from DBCHANGELOG ;`;
+
+export const INSERT_CHANGELOG_VERSION = ` INSERT INTO DBCHANGELOG (version) VALUES (?) ;`;

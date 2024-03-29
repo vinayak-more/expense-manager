@@ -1,4 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     databaseName: 'expense-manager-vm914',
+    changeLogVersion: 1,
 };
