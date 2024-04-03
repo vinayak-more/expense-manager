@@ -34,7 +34,8 @@
               "bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+            ],
             "prerender": false
           },
           "configurations": {
