@@ -7,12 +7,14 @@ import { Transaction } from '../../model/transaction.model';
 import { transactions } from '../../data/transactions';
 import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TransactionType } from '../../model/transaction-type.enum';
+import { CurrencyPipe } from '@angular/common';
 declare var google: any;
 
 @Component({
   selector: 'app-category-stats',
   standalone: true,
   imports: [
+    CurrencyPipe,
     MatButtonToggleModule,
   ],
   templateUrl: './category-stats.component.html',

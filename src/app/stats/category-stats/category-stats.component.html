@@ -9,8 +9,8 @@
     <hr>
     @for (stat of stats; track $index) {
         <div class="row">
-            <div class="col-8">{{ stat.categoryName }}</div>
-            <div class="col-4">{{ stat.amount }}</div>
+            <div class="col-8 ">{{ stat.categoryName }}</div>
+            <div class="col-4 text-align-right">{{ stat.amount | currency : 'INR'}}</div>
         </div>
         <hr>
     }
