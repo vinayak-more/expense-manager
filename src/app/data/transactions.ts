@@ -12,5 +12,17 @@ export const transactions: Transaction[] = [
         dateStr:'18-03-2024',
         accountName: 'Savings',
         categoryName: 'Transport'
+    },
+    {
+        id: 2,
+        transactionType: TransactionType.TRANSFER,
+        date: new Date(),
+        accountId: 1,
+        toAccountId: 2,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        toName: 'Credit Card',
+        note:"Credit card payment"
     }
 ]

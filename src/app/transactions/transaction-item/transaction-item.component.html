@@ -12,7 +12,7 @@
                     transaction.toName}}</mat-grid-tile>
                 <mat-grid-tile>{{ transaction.note }}</mat-grid-tile>
                 <mat-grid-tile>
-                    <div>{{transaction.amount}}</div>
+                    <div>{{transaction.amount | currency : 'INR'}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
             </mat-grid-list>
