@@ -5,8 +5,7 @@ It would be greate if you find this app useful and willing to contribute by addi
 
 Sample Screenshots of the Application
 
-<img src="./media/transactions.jpg" height="500em" alt="View Transactions" style="display:display-inline">
-<img src="./media/add_transaction.jpg" height="500em" alt="Add New Transaction" style="display:display-inline">
-<img src="./media/stats.jpg" height="500em" alt="View Stats" style="display:display-inline">
-<img src="./media/accounts.jpg" height="500em" alt="Manage Accounts" style="display:display-inline">
-<img src="./media/category.jpg" height="500em" alt="Manage Category" style="display:display-inline">
+| Transactions View | Add New Transaction | Statistics | Accounts | Categories |
+| ---- | ---- | ---- | ---- | ---- |
+| <img src="./media/transactions.jpg" height="500em" alt="View Transactions" > | <img src="./media/add_transaction.jpg" height="500em" alt="Add New Transaction" > | <img src="./media/stats.jpg" height="500em" alt="View Stats" > | <img src="./media/accounts.jpg" height="500em" alt="Manage Accounts" > | <img src="./media/category.jpg" height="500em" alt="Manage Category" >
+ |
