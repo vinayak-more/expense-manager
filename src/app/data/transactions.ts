@@ -69,4 +69,115 @@ export const transactions: Transaction[] = [
         accountName: 'Savings',
         categoryName: 'Transport'
     },
+    {
+        id: 5,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 4,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 6,
+        transactionType: TransactionType.CREDIT,
+        date: new Date("04/07/2024"),
+        accountId: 1,
+        categoryId: 5,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport',
+        note:'Bus'
+    },
+    {
+        id: 5,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 4,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 6,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 5,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 5,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 4,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 6,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 5,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 5,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 4,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 6,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 5,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 5,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 4,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
+    {
+        id: 6,
+        transactionType: TransactionType.CREDIT,
+        date: new Date(),
+        accountId: 1,
+        categoryId: 5,
+        amount: 25,
+        dateStr:'18-03-2024',
+        accountName: 'Savings',
+        categoryName: 'Transport'
+    },
 ]

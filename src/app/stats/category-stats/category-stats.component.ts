@@ -79,6 +79,7 @@ export class CategoryStatsComponent implements OnInit, AfterViewInit {
     for (let key of map.keys()) {
       this.stats.push(new Stat(categoryMap.get(key), map.get(key)));
     }
+    this.stats.sort((a, b)=> b.amount - a.amount);
     console.log(this.stats);
     this.drawChart();
   }
