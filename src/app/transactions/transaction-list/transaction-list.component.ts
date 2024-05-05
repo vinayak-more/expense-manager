@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemComponent } from '../transaction-item/transaction-item.component';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   transactionMap: Map<string, Transaction[]> | null = this.getTransactionsGroupByDate(transactions);
   transactionsSub: Subscription;
 
+  @ViewChild("txnList") txnList:ElementRef;
+
   constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
@@ -38,7 +40,12 @@ export class TransactionListComponent implements OnInit, OnDestroy {
         map.set(transaction.dateStr, [transaction]);
       }
     }
+//    this.txnList.nativeElement.scrollIntoView();
     return map;
+  }
+
+  ngAfterViewInit(){
+   this.txnList.nativeElement.scrollIntoView();
   }
 
   ngOnDestroy(): void {

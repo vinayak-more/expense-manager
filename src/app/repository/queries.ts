@@ -2,10 +2,11 @@ export const SELECT_TRANSACTIONS_BY_MONTHYEAR = `
 SELECT 
 T.*, 
 A.accountName, 
-A.accountName as toName,
+B.accountName as toName,
 C.name as categoryName
 FROM TXN T 
 JOIN ACCOUNT A ON T.accountId = A.Id 
+LEFT JOIN ACCOUNT B ON T.toAccountId = B.Id
 LEFT JOIN CATEGORY C ON T.categoryId = C.Id
 WHERE monthYear = ?
 `

@@ -12,7 +12,7 @@
                     transaction.toName}}</mat-grid-tile>
                 <mat-grid-tile>{{ transaction.note }}</mat-grid-tile>
                 <mat-grid-tile>
-                    <div>{{transaction.amount}}</div>
+                    <div>{{transaction.amount | currency : 'INR'}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
             </mat-grid-list>
@@ -20,8 +20,12 @@
             @else{
             <mat-grid-list cols="4" rowHeight="3rem" (click)="onClick(transaction)">
                 <mat-grid-tile colspan="2">
+                @if(transaction.transactionType === transactionType.CREDIT){
+                    {{ transaction.categoryName }} <mat-icon>arrow_forward</mat-icon> {{ transaction.accountName }}
+                } @else {
                     {{ transaction.accountName }} <mat-icon>arrow_forward</mat-icon>{{ transaction.categoryName }}
-                </mat-grid-tile>
+                }
+            </mat-grid-tile>
                 <mat-grid-tile>
                     {{transaction.note}}
                 </mat-grid-tile>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Subject, take } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, take } from 'rxjs';
 import { Transaction } from '../model/transaction.model';
 import { TransactionRepository } from '../repository/transaction.repository';
 import { DatabaseService } from './database.service';
@@ -10,7 +10,7 @@ import { AccountService } from './account.service';
 })
 export class TransactionService{
   selectedMonth = new Date();
-  selectedMonth$ = new Subject<Date>();
+  selectedMonth$ = new BehaviorSubject<Date>(this.selectedMonth);
   public transactions$ = new ReplaySubject<Transaction[]>();
   transactions: Transaction[] = [];
 

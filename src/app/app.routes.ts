@@ -6,6 +6,7 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AccountFormComponent } from './accounts/account-form/account-form.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryFormComponent } from './category/category-form/category-form.component';
+import { StatsComponent } from './stats/stats.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'transactions', pathMatch: "full" },
@@ -19,5 +20,5 @@ export const routes: Routes = [
     { path: 'category', component: CategoryComponent },
     { path: 'category/new', component: CategoryFormComponent },
     { path: 'category/:id', component: CategoryFormComponent },
-
+    { path: 'stats', component: StatsComponent },
 ];
