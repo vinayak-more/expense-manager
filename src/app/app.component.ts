@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DatabaseService } from './service/database.service';
 import { FooterComponent } from './footer/footer.component';
+import { NotificationService } from './service/notificationService';
 
 
 @Component({
@@ -12,11 +13,12 @@ import { FooterComponent } from './footer/footer.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  constructor(private database: DatabaseService){
+  constructor(private database: DatabaseService, private notification: NotificationService){
     this.init();
   }
 
   async init(){
     this.database.initializePlugin();
+    this.notification.init();
   }
 }
