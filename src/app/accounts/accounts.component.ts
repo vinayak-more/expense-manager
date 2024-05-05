@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
 import { AccountListComponent } from './account-list/account-list.component';
 import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-accounts',
@@ -20,6 +21,7 @@ import { FooterComponent } from '../footer/footer.component';
 
     AccountListComponent,
     FooterComponent,
+    HeaderComponent,
   ],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss'

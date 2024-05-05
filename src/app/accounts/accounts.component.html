@@ -1,19 +1,12 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-10">
-            <button mat-icon-button (click)="onBack()">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <span style="vertical-align: super;">
-                <h2 style="display: inline-block;">Manage Accounts</h2>
-            </span>
-        </div>
-        <div class="col-2">
+    <app-header>
+        <span class="title">Manage Accounts</span>
+        <div class="right-panel col-2">
             <a mat-icon-button [routerLink]="['new']">
                 <mat-icon>add</mat-icon>
             </a>
         </div>
-    </div>
+    </app-header>
     <div class="row">
         <app-account-list></app-account-list>
     </div>

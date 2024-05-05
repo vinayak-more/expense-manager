@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-category',
@@ -11,6 +12,7 @@ import { FooterComponent } from '../footer/footer.component';
   imports: [
     CategoryListComponent,
     FooterComponent,
+    HeaderComponent,
     
     RouterLink,
     MatIconModule,
