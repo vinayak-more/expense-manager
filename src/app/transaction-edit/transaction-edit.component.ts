@@ -72,7 +72,7 @@ export class TransactionEditComponent implements OnInit {
     let transaction = null;
     if (this.router.getCurrentNavigation()?.extras?.state) {
       transaction = <Transaction>this.router.getCurrentNavigation()?.extras?.state['transaction'];
-      this.transaction = { ...transaction, 'date': this.stringToDate(transaction.dateStr) };
+      this.transaction = { ...transaction, 'date': this.transactionService.stringToDate(transaction.dateStr) };
     }
   }
 
@@ -86,8 +86,12 @@ export class TransactionEditComponent implements OnInit {
       this.categories = this.categoryMaster.filter(category => category.transactionType === this.formGroup.value.transactionType);
     });
     if (this.transaction) {
-      this.editMode = true;
-      this.onTransactionTypeChange(this.transaction.transactionType);
+      if(this.transaction.id){
+        this.editMode = true;
+        this.onTransactionTypeChange(this.transaction.transactionType);
+      } else {
+        this.editMode = false;
+      }
       this.formGroup.patchValue(this.transaction);
     } else {
       this.editMode = false;
@@ -114,7 +118,7 @@ export class TransactionEditComponent implements OnInit {
     const transaction = {
       ...this.formGroup.getRawValue(),
       'monthYear': this.getMonthYear(this.formGroup.value.date),
-      'dateStr': this.getDateToString(this.formGroup.value.date),
+      'dateStr': this.transactionService.getDateToString(this.formGroup.value.date),
     };
     console.log(transaction);
     if (this.editMode) {
@@ -126,29 +130,6 @@ export class TransactionEditComponent implements OnInit {
     this.onBack();
   }
 
-  /**
-   * 
-   * @param dateStr Date in string with pattern DD-MM-yyyy i.e 17-03-2024
-   * @returns javascript date object
-   */
-  private stringToDate(dateStr: string): Date {
-    let splits = dateStr.split("-");
-    if (splits.length != 3) return null;
-    const date = new Date();
-    date.setDate(parseInt(splits[0]));
-    date.setMonth(parseInt(splits[1]) - 1);
-    date.setFullYear(parseInt(splits[2]));
-    return date;
-  }
-
-  /**
-   * 
-   * @param date javascript date object
-   * @returns date in string with pattern DD-MM-yyyy i.e 17-03-2024
-   */
-  private getDateToString(date: Date) {
-    return date.toLocaleDateString('es-CL');
-  }
   private getMonthYear(date: Date) {
     return date.getMonth() + '-' + date.getFullYear();
   }

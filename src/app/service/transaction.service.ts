@@ -76,4 +76,28 @@ export class TransactionService{
     await this.accountService.deleteTransaction(transactionEntity);
     this.repository.deleteTransaction(id).then(() => this.emitTransations());;
   }
+
+  /**
+   * 
+   * @param dateStr Date in string with pattern DD-MM-yyyy i.e 17-03-2024
+   * @returns javascript date object
+   */
+  public stringToDate(dateStr: string): Date {
+    let splits = dateStr.split("-");
+    if (splits.length != 3) return null;
+    const date = new Date();
+    date.setDate(parseInt(splits[0]));
+    date.setMonth(parseInt(splits[1]) - 1);
+    date.setFullYear(parseInt(splits[2]));
+    return date;
+  }
+
+  /**
+   * 
+   * @param date javascript date object
+   * @returns date in string with pattern DD-MM-yyyy i.e 17-03-2024
+   */
+  public getDateToString(date: Date) {
+    return date.toLocaleDateString('es-CL');
+  }
 }
