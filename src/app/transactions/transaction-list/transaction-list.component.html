@@ -1,11 +1,10 @@
 <div class="overflow-y-scroll" class="txn-list" >
-    <div *ngFor="let transaction of transactionMap | keyvalue">
+    <div *ngFor="let transaction of transactionMap | keyvalue" style="margin-bottom: 15px;">
         <app-transaction-item 
         [transactionDate]="transaction.key"
         [transactions]="transaction.value" 
         >
         </app-transaction-item>
-        <br>
     </div>
     <div #txnList></div>
 </div>

@@ -32,7 +32,7 @@ export const transactions: Transaction[] = [
         accountId: 1,
         categoryId: 2,
         amount: 250,
-        dateStr:'18-03-2024',
+        dateStr:'17-03-2024',
         accountName: 'Savings',
         categoryName: 'Transport'
     },
