@@ -95,8 +95,9 @@ export class CategoryStatsComponent implements OnInit, AfterViewInit {
 
     // Set chart options
     var options = {
-      'width': 400,
-      'height': 300
+      'width': 500,
+      'height': 300,
+      'is3D': true
     };
 
     // Instantiate and draw our chart, passing in some options.

@@ -1,8 +1,8 @@
-<mat-grid-list cols="3" rowHeight="3rem" (click)="onClick()">
-    <mat-grid-tile>
+<mat-grid-list cols="5" rowHeight="3rem" (click)="onClick()">
+    <mat-grid-tile colspan="2">
         {{ date }}
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile colspan="2">
         <div class="text-primary">{{ credits | currency : 'INR' }}</div>
     </mat-grid-tile>
     <mat-grid-tile>

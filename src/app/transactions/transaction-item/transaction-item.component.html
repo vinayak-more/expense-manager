@@ -7,32 +7,44 @@
         <mat-divider></mat-divider>
         <div *ngFor="let transaction of transactions">
             @if(transaction.transactionType === transactionType.TRANSFER){
-            <mat-grid-list cols="4" rowHeight="3rem" (click)="onClick(transaction)">
-                <mat-grid-tile colspan="2"> {{ transaction.accountName }} <mat-icon>arrow_forward</mat-icon> {{
-                    transaction.toName}}</mat-grid-tile>
-                <mat-grid-tile>{{ transaction.note }}</mat-grid-tile>
+            <mat-grid-list cols="5" rowHeight="3rem" (click)="onClick(transaction)">
+                <mat-grid-tile colspan="2">
+                    <div class="text-align-left w-100 d-flex align-items-center">
+                        {{ transaction.accountName }} <mat-icon>arrow_forward</mat-icon> {{ transaction.toName}}
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">{{ transaction.note }}</mat-grid-tile>
                 <mat-grid-tile>
-                    <div>{{transaction.amount | currency : 'INR'}}</div>
+                    <div class="text-align-right w-100">{{transaction.amount | currency: 'INR': 'symbol': '.0-0'}}</div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
             </mat-grid-list>
             }
             @else{
-            <mat-grid-list cols="4" rowHeight="3rem" (click)="onClick(transaction)">
+            <mat-grid-list cols="5" rowHeight="3rem" (click)="onClick(transaction)">
                 <mat-grid-tile colspan="2">
-                @if(transaction.transactionType === transactionType.CREDIT){
-                    {{ transaction.categoryName }} <mat-icon>arrow_forward</mat-icon> {{ transaction.accountName }}
-                } @else {
-                    {{ transaction.accountName }} <mat-icon>arrow_forward</mat-icon>{{ transaction.categoryName }}
-                }
-            </mat-grid-tile>
-                <mat-grid-tile>
-                    {{transaction.note}}
+                    <div class="text-align-left w-100 d-flex align-items-center">
+                        @if(transaction.transactionType === transactionType.CREDIT){
+                        {{ transaction.categoryName }} 
+                        <mat-icon>arrow_forward</mat-icon>
+                        {{ transaction.accountName }}
+                        } @else {
+                        {{ transaction.accountName }} <mat-icon>arrow_forward</mat-icon>{{ transaction.categoryName }}
+                        }
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                    <div class="text-align-center w-100">
+                        {{transaction.note}}
+                    </div>
                 </mat-grid-tile>
                 <mat-grid-tile>
-                    <div
-                        [ngClass]="{'text-danger': transaction.transactionType === transactionType.DEBIT , 'text-primary': transaction.transactionType === transactionType.CREDIT}">
-                        {{transaction.amount | currency : 'INR'}}</div>
+                    <div class="w-100 text-align-right" [ngClass]="{
+                            'text-danger': transaction.transactionType === transactionType.DEBIT , 
+                            'text-primary': transaction.transactionType === transactionType.CREDIT,
+                            }">
+                        {{transaction.amount | currency: 'INR': 'symbol': '.0-0'}}
+                    </div>
                 </mat-grid-tile>
                 <mat-divider></mat-divider>
             </mat-grid-list>
