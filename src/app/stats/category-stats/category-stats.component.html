@@ -5,13 +5,5 @@
             <mat-button-toggle checked class="col-6" value="DEBIT">Expense</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
-    <div #pieChart></div>
-    <hr>
-    @for (stat of stats; track $index) {
-        <div class="row">
-            <div class="col-8 ">{{ stat.categoryName }}</div>
-            <div class="col-4 text-align-right">{{ stat.amount | currency : 'INR'}}</div>
-        </div>
-        <hr>
-    }
+    <app-piechart [transactions]="transactions" [categories]="categories" [transactionType]="transactionType"></app-piechart>
 </div>

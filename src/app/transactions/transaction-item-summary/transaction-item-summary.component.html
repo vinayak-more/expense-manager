@@ -3,9 +3,9 @@
         {{ date }}
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
-        <div class="text-primary">{{ credits | currency : 'INR' }}</div>
+        <div class="text-primary">{{ credits | currency: 'INR': 'symbol': '.0-0' }}</div>
     </mat-grid-tile>
     <mat-grid-tile>
-        <div class="text-danger">{{ debits | currency : 'INR' }}</div>
+        <div class="text-danger">{{ debits | currency: 'INR': 'symbol': '.0-0' }}</div>
     </mat-grid-tile>
 </mat-grid-list>
