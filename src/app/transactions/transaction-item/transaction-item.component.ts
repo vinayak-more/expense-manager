@@ -3,7 +3,7 @@ import {MatCardModule} from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { Transaction } from '../../model/transaction.model';
 import { TransactionItemSummaryComponent } from '../transaction-item-summary/transaction-item-summary.component';
-import { CurrencyPipe, NgClass, NgFor } from '@angular/common';
+import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TransactionType } from '../../model/transaction-type.enum';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [ 
     NgFor,
     NgClass,
+    NgIf,
     CurrencyPipe,
     TransactionItemSummaryComponent,
     MatIconModule,

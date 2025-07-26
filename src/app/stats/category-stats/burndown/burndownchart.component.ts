@@ -82,7 +82,7 @@ export class BurndownChartComponent {
         ]);
         var options = {
             'width': 400,
-            'height': 250,
+            'height': 400,
             'curveType': 'function',
             'legend': { position: 'bottom' },
             'pointSize': 5,
