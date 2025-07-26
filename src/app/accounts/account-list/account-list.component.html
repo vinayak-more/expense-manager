@@ -1,20 +1,23 @@
 <h2>Accounts</h2>
 <hr>
-<div class="account-list-container">
-@for (account of accounts; track account.id) {
-    <div class="row" [routerLink]="[account.id]">
-        <div class="col-6">
-            <div 
-            class="d-flex justify-content-start"
-            >{{ account.name }}</div> 
-        </div>
-        <div class="col-6">
-            <div 
-            class="d-flex justify-content-end"
-            [ngClass]=" account.balance < 0 ? 'text-danger' : 'text-primary'"
-            >{{ account.balance | currency : 'INR'}}</div> 
-        </div>
-    </div>
-    <hr>
-}
-</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Account Name</th>
+            <th class="text-end">Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (account of accounts; track account.id) {
+            <tr [routerLink]="[account.id]" style="cursor:pointer;">
+                <td>{{ account.name }}</td>
+                <td 
+                    class="text-end"
+                    [ngClass]="account.balance < 0 ? 'text-danger' : 'text-primary'"
+                >
+                    {{ account.balance | currency : 'INR' }}
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

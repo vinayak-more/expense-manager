@@ -9,6 +9,11 @@ import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/
 import { TransactionType } from '../../model/transaction-type.enum';
 import { CurrencyPipe } from '@angular/common';
 import { PiechartComponent } from './piechart/piechart.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { NgIf } from '@angular/common';
+import { BurndownChartComponent } from './burndown/burndownchart.component';
 
 @Component({
   selector: 'app-category-stats',
@@ -16,45 +21,19 @@ import { PiechartComponent } from './piechart/piechart.component';
   imports: [
     MatButtonToggleModule,
     PiechartComponent,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    NgIf,
+    BurndownChartComponent,
   ],
   templateUrl: './category-stats.component.html',
   styleUrl: './category-stats.component.scss'
 })
-export class CategoryStatsComponent implements OnInit {
-
+export class CategoryStatsComponent {
   categories: Category[] = categories;
   transactions: Transaction[] = transactions;
   transactionType:TransactionType = TransactionType.DEBIT;
-  
-  @ViewChild('pieChart') pieChart: ElementRef;
-
-  constructor(
-    private categoryService: CategoryService,
-    private transactionService: TransactionService,
-  ) {
-
-  }
-
-  ngOnInit(): void {
-
-    this.transactionService.selectedMonth$.subscribe(()=>{
-      this.init();
-    })
-
-  }
-  init(){
-    Promise.all(
-      [this.categoryService.getCategories(),
-      this.transactionService.getTransactions()]
-    ).then((value: [Category[], Transaction[]]) => {
-      this.categories = value[0];
-      this.transactions = value[1];
-    });
-  }
-
-  onToogleType(event: MatButtonToggleChange){
-    console.log(event.value);
-    this.transactionType = event.value;
-  }
+  chartType: string = 'allocation';
 }
 

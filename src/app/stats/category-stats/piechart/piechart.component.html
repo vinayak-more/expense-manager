@@ -1,9 +1,17 @@
 <div class="pie-chart-container">
   <div #pieChart></div>
 </div>
-<hr>
-<div *ngFor="let stat of stats; let i = index; trackBy: trackByIndex" class="row">
-  <div class="col-8">{{ stat.categoryName }}</div>
-  <div class="col-4 text-align-right">{{ stat.amount | currency : 'INR' }}</div>
-  <hr>
-</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th class="text-align-right">Expenses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stat of stats; let i = index; trackBy: trackByIndex">
+      <td>{{ stat.categoryName }}</td>
+      <td class="text-align-right">{{ stat.amount | currency : 'INR' }}</td>
+    </tr>
+  </tbody>
+</table>

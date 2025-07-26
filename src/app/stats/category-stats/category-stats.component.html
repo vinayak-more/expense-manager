@@ -1,9 +1,17 @@
 <div class="container-fluid stats-container">
-    <div class="row">
-        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" (change)="onToogleType($event)">
-            <mat-button-toggle  class="col-6" value="CREDIT">Income</mat-button-toggle>
-            <mat-button-toggle checked class="col-6" value="DEBIT">Expense</mat-button-toggle>
-        </mat-button-toggle-group>
+    <div class="row mt-2 mb-2">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Chart Type</mat-label>
+            <mat-select [(value)]="chartType">
+                <mat-option value="allocation">Allocation</mat-option>
+                <mat-option value="burndown">Burndown</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
-    <app-piechart [transactions]="transactions" [categories]="categories" [transactionType]="transactionType"></app-piechart>
+    <ng-container *ngIf="chartType === 'allocation'">
+        <app-piechart />
+    </ng-container>
+    <ng-container *ngIf="chartType === 'burndown'">
+        <app-burndownchart />
+    </ng-container>
 </div>

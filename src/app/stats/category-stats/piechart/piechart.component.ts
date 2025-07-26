@@ -2,6 +2,11 @@ import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, 
 import { CurrencyPipe, NgFor } from '@angular/common';
 import { Transaction } from '../../../model/transaction.model';
 import { Category } from '../../../model/category.model';
+import { categories } from '../../../data/categories';
+import { transactions } from '../../../data/transactions';
+import { TransactionType } from '../../../model/transaction-type.enum';
+import { CategoryService } from '../../../service/category.service';
+import { TransactionService } from '../../../service/transaction.service';
 declare var google: any;
 
 @Component({
@@ -11,21 +16,41 @@ declare var google: any;
   templateUrl: './piechart.component.html',
   styleUrl: './piechart.component.scss'
 })
-export class PiechartComponent implements AfterViewInit, OnChanges {
-  @Input() transactions: Transaction[] = [];
-  @Input() categories: Category[] = [];
-  @Input() transactionType: string;
+export class PiechartComponent {
   @ViewChild('pieChart') pieChart: ElementRef;
+
+  categories: Category[] = categories;
+  transactions: Transaction[] = transactions;
+  transactionType: TransactionType = TransactionType.DEBIT;
+  burndownData: { date: string; total: number }[] = [];
+
+  constructor(
+    private categoryService: CategoryService,
+    private transactionService: TransactionService,
+  ) { }
+
+  ngOnInit(): void {
+    this.transactionService.selectedMonth$.subscribe(() => {
+      this.init();
+    })
+
+  }
+  init() {
+    Promise.all(
+      [this.categoryService.getCategories(),
+      this.transactionService.getTransactions()]
+    ).then((value: [Category[], Transaction[]]) => {
+      this.categories = value[0];
+      this.transactions = value[1];
+      this.updateStats();
+    });
+  }
 
   stats: { categoryName: string; amount: number }[] = [];
 
   ngAfterViewInit(): void {
     google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(this.updateStats.bind(this));
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.updateStats();
   }
 
   updateStats() {
@@ -50,7 +75,7 @@ export class PiechartComponent implements AfterViewInit, OnChanges {
   }
 
   drawChart() {
-    if (!this.pieChart || !this.stats || this.stats.length === 0 || !google.visualization) return;
+    if (!this.pieChart || !this.stats || !google.visualization) return;
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Category');
     data.addColumn('number', 'Amount');
